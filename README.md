@@ -1,6 +1,6 @@
 # CPTS Quick References  
 
->HackTheBox CPTS Commands Quick references  
+## HackTheBox CPTS Modules - Commands Quick references  
 
 * [Getting Started](/Getting%20Started.md)  
 * [Network Enumeration NMAP]("/Network%20Enumeration%20NMAP.md")  
@@ -18,5 +18,8 @@
 * [Login Brute Forcing](/Login Brute Forcing.md)  
 * [SQL Injection Fundamentals](/SQL Injection Fundamentals.md)  
 
+## HTB Academy Skills Assessment - Lab Walkthroughs   
 
+* [HARD Lab - Attacking Common Services](/HARD%20Lab%20-%20Attacking%20Common%20Services.md)
+* to be completed ...
 
