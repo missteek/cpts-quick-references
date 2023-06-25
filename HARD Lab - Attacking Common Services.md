@@ -1,8 +1,8 @@
 # Attacking Common Services - HARD
 
->HackTheBox Academy Module Assessment LAB walkthrough
-[Attacking SMB](https://academy.hackthebox.com/module/116/section/1167)
-[Attacking SQL Databases](https://academy.hackthebox.com/module/116/section/1169)
+>HackTheBox Academy Module Assessment LAB walkthrough  
+[Attacking SMB](https://academy.hackthebox.com/module/116/section/1167)  
+[Attacking SQL Databases](https://academy.hackthebox.com/module/116/section/1169)  
 
 ## port Scan NMAP discovery
 
