@@ -92,6 +92,8 @@
 | `python3 windapsearch.py --dc-ip 172.16.5.5 -u inlanefreight\wley -p Klmcargo2 --da` | Used to enumerate the domain admins group (`--da`) using a valid set of credentials on a target Windows domain. Performed from a Linux-based host. |
 | `python3 windapsearch.py --dc-ip 172.16.5.5 -u inlanefreight\wley -p Klmcargo2 -PU` | Used to perform a recursive search (`-PU`) for users with nested permissions using valid credentials. Performed from a Linux-based host. |
 | `sudo bloodhound-python -u 'forend' -p 'Klmcargo2' -ns 172.16.5.5 -d inlanefreight.local -c all` | Executes the python implementation of BloodHound (`bloodhound.py`) with valid credentials and specifies a name server (`-ns`) and target Windows domain (`inlanefreight.local`)  as well as runs all checks (`-c all`). Runs using valid credentials. Performed from a Linux-based host. [Credentialed Enumeration - from Linux - Retrieve AD data such as user sessions, users and groups, object properties, ACLS, or select all to gather as much data as possible.](https://academy.hackthebox.com/module/143/section/1269) |
+| `sudo neo4j start` | BloodHound GUI - to start the neo4j service |
+| `bloodhound` | Once we have domain credentials, we can run the BloodHound.py BloodHound ingestor from our Linux attack host. BloodHound is one of, if not the most impactful tools ever released for auditing Active Directory security. |
 
 # Enumeration by Living Off the Land
 
