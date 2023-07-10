@@ -35,7 +35,7 @@
 |-|-|
 | `mysql -u julio -pPassword123 -h 10.129.20.13` | Connecting to the MySQL server. |
 | `sqlcmd -S SRVMSSQL\SQLEXPRESS -U julio -P 'MyPassword!' -y 30 -Y 30` | Connecting to the MSSQL server.  |
-| `sqsh -S 10.129.203.7 -U julio -P 'MyPassword!' -h` | Connecting to the MSSQL server from Linux.  |
+| `sqsh -S 10.129.203.7 -U julio -P 'MyPassword!' -h` | Connecting to the MSSQL server from Linux. [Interacting with Common Services - MySQL & MSSQL common ways to interact with the databases remotely through Command Line Utilities: `mysql` or `sqsh`](https://academy.hackthebox.com/module/116/section/1140) |
 | `sqsh -S 10.129.203.7 -U .\\julio -P 'MyPassword!' -h` | Connecting to the MSSQL server from Linux while Windows Authentication mechanism is used by the MSSQL server. |
 | `mysql> SHOW DATABASES;` | Show all available databases in MySQL. |
 | `mysql> USE htbusers;` | Select a specific database in MySQL. |
