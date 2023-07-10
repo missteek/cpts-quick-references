@@ -17,6 +17,7 @@
 | `smbmap -H 10.129.14.128 -r notes` | Recursive network share enumeration using `smbmap`. |
 | `smbmap -H 10.129.14.128 --download "notes\note.txt"` | Download a specific file from the shared folder. |
 | `smbmap -H 10.129.14.128 --upload test.txt "notes\test.txt"` | Upload a specific file to the shared folder. |
+| `smbmap -H 172.16.7.50 -u BR086 -p Welcome1 -d inlanefreight.local` | Using crednetials obtained to authenticate to remote server and enumerate shares & permissions to the shares. [Attacking SMB - ATTACKING COMMON SERVICES](https://academy.hackthebox.com/module/116/section/1167) |
 | `rpcclient -U'%' 10.10.110.17` | Null-session with the `rpcclient`. |
 | `./enum4linux-ng.py 10.10.11.45 -A -C` | Automated enumeratition of the SMB service using `enum4linux-ng`. |
 | `crackmapexec smb 10.10.110.17 -u /tmp/userlist.txt -p 'Company01!'` | Password spraying against different users from a list. |
