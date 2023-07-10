@@ -22,6 +22,7 @@
 ## HTB Academy Skills Assessment - Lab Walkthroughs   
 
 * [HARD Lab - Attacking Common Services](/HARD%20Lab%20-%20Attacking%20Common%20Services.md)  
-* [AD Enumeration & Attacks - Skills Assessment Part I](/AD%20Enumeration%20&%20Attacks%20-%20Skills%20Assessment%20Part%20I.md)  
-* Inprogress loading ...  
+* [AD Enumeration & Attacks - Skills Assessment Part I](/AD%20Enumeration%20&%20Attacks%20-%20Skills%20Assessment%20Part%20I.md)
+* [AD Enumeration & Attacks - Skills Assessment Part II](/AD%20Enumeration%20%26%20Attacks%20-%20Skills%20Assessment%20Part%20II.md)  
+* Learning In progress loading ...  ...  
 
