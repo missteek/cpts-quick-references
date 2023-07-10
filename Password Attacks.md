@@ -1,3 +1,5 @@
+# PASSWORD ATTACKS  
+
 ## Connecting to Target
 
 | **Command**| **Description**|
@@ -9,6 +11,18 @@
 | `python3 smbserver.py -smb2support CompData /home/<nameofuser>/Documents/` | Uses smbserver.py to create a share on a linux-based attack host. Can be useful when needing to transfer files from a target to an attack host. |
 
 ---
+
+## Password Reuse / Default Passwords  
+
+>Often one network device, such as a router, printer, or a firewall, is overlooked, and the default credentials are used, or the same password is reused.
+>There are various databases that keep a running list of known default credentials. One of them is the [DefaultCreds-Cheat-Sheet](https://github.com/ihebski/DefaultCreds-cheat-sheet).
+>Google Search - Default Credentials
+>[HackTheBox CPTS Password Reuse / Default Passwords](https://academy.hackthebox.com/module/147/section/1328)  
+
+```
+/home/kali/.local/bin/creds search mssql
+```
+
 ## Password Mutations
 
 | **Command**| **Description**|
