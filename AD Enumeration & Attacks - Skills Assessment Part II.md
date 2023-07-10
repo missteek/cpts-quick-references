@@ -629,3 +629,5 @@ lsadump::dcsync /user:inlanefreight\krbtgt
 >Above command Submit the NTLM hash for the KRBTGT account for the target domain after achieving domain compromise, and lead to full domain administrator access.  
 
 [AD Enumeration & Attacks - Skills Assessment Part II - Scenario](https://academy.hackthebox.com/module/143/section/1279)  
+
+[Beyond this Module - Extra Practice performing the ProLabs of Dante and Offshore Pro Labs.](https://academy.hackthebox.com/module/143/section/1267)  
