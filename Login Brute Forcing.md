@@ -1,3 +1,15 @@
+# Login Brute Forcing  
+
+# Pasword HASH Enumeration  
+
+>Files that can contain hashed passwords for offline brute-forcing:  
+
+| **Windows**   | **Linux**   |
+| --------------|-------------------|
+| unattend.xml | shadow |
+| sysprep.inf | shadow.bak |
+| SAM | password / passwd |
+
 # Hydra
 
 | **Command**   | **Description**   |
