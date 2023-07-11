@@ -16,7 +16,7 @@
 * [Active Directory Tools](/Active%20Directory%20Tools.md)  
 * [Using Web Proxies](/Using%20WEB%20Proxies.md)  
 * [Attacking Web Applications with Ffuf](/FFUF-Web-Fuzzing.md)  
-* [Login Brute Forcing](/Login Brute Forcing.md)  
+* [Login Brute Forcing](/Login%20Brute%20Forcing.md)  
 * [SQL Injection Fundamentals](/SQL Injection Fundamentals.md)
 * [SQLMap Essentials]()
 * [Cross-Site Scripting (XSS)]()
