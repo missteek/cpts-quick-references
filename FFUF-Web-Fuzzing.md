@@ -118,9 +118,9 @@ ffuf -u http://horizontall.htb -H 'Host: FUZZ.forge.htb' -c -w ~/Downloads/wordl
 ffuf -c -w /usr/share/seclists/Discovery/Web-Content/common.txt -u http://broadcast.vulnnet.htb/FUZZ -e .txt,.json,.php,.html,.bak,.old,.sql,.zip,.zz -fc 403
 ```
 
->Accepted Extension discovery scans.  
+>Fuzz for the Accepted Extension on multiple sub domains discovered by doing `for` loop.  
 ```
-ffuf -c -ic -w /usr/share/seclists/Discovery/Web-Content/web-extensions.txt:FUZZ -u http://academy.htb:57089/indexFUZZ
+for sub in archive test faculty; do ffuf -c -ic -w /usr/share/seclists/Discovery/Web-Content/web-extensions.txt:FUZZ -u http://$sub.academy.htb:57089/indexFUZZ; done
 ```  
 
 >Multiple subdomain scan using a `for` loop to scan through possible file names with three possible extensions listed, `.php,.phps,.php7`.  
@@ -329,32 +329,37 @@ EXAMPLE USAGE:
 
 # Skills Assessment - Web Fuzzing  
 
-94.237.55.114:57089
+>[HackTheBox Academy - Skills Assessment - Web Fuzzing with FFUF](https://academy.hackthebox.com/module/54/section/511)  
+>{walkThrough](https://charleskvarga.com/post/htb-academy-attacking-web-applications-with-ffuf-walkthrough/)  
 
-
->Run a sub-domain/vhost fuzzing scan on `*.academy.htb` for the IP shown above. What are all the sub-domains you can identify?
-
+>1. Run a sub-domain/vhost fuzzing scan on `*.academy.htb` for the IP shown above. What are all the sub-domains you can identify?
 ```
-ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u http://FUZZ.academy.htb:PORT/
+ffuf -w quick-list.txt:FUZZ -u http://FUZZ.academy.htb:PORT/
 ```  
 
+>2. Before you run your page fuzzing scan, you should first run an extension fuzzing scan. What are the different extensions accepted by the domains?  
 ```
-ffuf -c -ic -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u http://academy.htb:52269/ -H 'Host: FUZZ.academy.htb' -fs 985
+for sub in archive test faculty; do ffuf -c -ic -w quick-list.txt:FUZZ -u http://$sub.academy.htb:57089/indexFUZZ; done
+```  
 
-
-https://academy.hackthebox.com/module/54/section/511 Question 5:
-ffuf -w /opt/useful/SecLists/Usernames/top-usernames-shortlist.txt:FUZZ -u http://faculty.academy.htb:39234/courses/linux-security.php7 -X POST -d 'username=FUZZ' -H 'Content-Type: application/x-www-form-urlencoded'
- 
-ffuf -w /opt/useful/SecLists/Usernames/top-usernames-shortlist.txt:FUZZ -u http://faculty.academy.htb:39234/courses/linux-security.php7 -X POST -d 'user=FUZZ' -H 'Content-Type: application/x-www-form-urlencoded'
-
-ffuf -w /opt/useful/SecLists/Usernames/top-usernames-shortlist.txt:FUZZ -u http://faculty.academy.htb:39234/courses/linux-security.php7?username=FUZZ -fs 774
- 
-ffuf -w /opt/useful/SecLists/Usernames/top-usernames-shortlist.txt:FUZZ -u http://faculty.academy.htb:39234/courses/linux-security.php7?user=FUZZ -fs 780
+>3. One of the pages you will identify should say 'You don't have access!'. What is the full page URL?  
 ```
+for sub in archive test faculty; do ffuf -c -ic -w quick-list.txt:FUZZ -u http://$sub.academy.htb:57089/FUZZ -recursion -recursion-depth 1 -e .php,.phps,.php7 -v -t 200 -fs 287 -fc 403; done
+```  
 
-
->94.237.55.114:57089
-
+>4. In the page from the previous question, you should be able to find multiple parameters that are accepted by the page. What are they?
 ```
-for sub in archive test faculty; do ffuf -w /usr/share/wordlists/SecLists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://:30862$sub.academy.htb/FUZZ -recursion -recursion-depth 1 -e .php,.phps,.php7 -v -t 200 -fs 287 -ic; done
+ffuf -c -ic -w quick-list.txt:FUZZ -u http://faculty.academy.htb:57089/courses/linux-security.php7 -X POST -d 'FUZZ=key' -H 'Content-Type: application/x-www-form-urlencoded' -fs 774
+```  
+
+>5. Try fuzzing the parameters you identified for working values. One of them should return a flag. What is the content of the flag?
 ```
+ffuf -w parameters.txt:PARAM -w quick-list.txt:VAL -c -ic -u http://faculty.academy.htb:57089/courses/linux-security.php7 -X POST -d 'PARAM=VAL' -H 'Content-Type: application/x-www-form-urlencoded' -fw 223
+```  
+
+>POST Curl request  
+```
+curl http://faculty.academy.htb:57089/courses/linux-security.php7 -X POST -d 'username=harry' -H 'Content-Type: application/x-www-form-urlencoded' | html2text
+```  
+
+>HTB{w3b_fuzz1n6_m4573r}  
