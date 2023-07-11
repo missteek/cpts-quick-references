@@ -20,7 +20,16 @@
 * [SQL Injection Fundamentals](/SQL Injection Fundamentals.md)
 * [SQLMap Essentials]()
 * [Cross-Site Scripting (XSS)]()
-* [File Inclusion]()  
+* [File Inclusion]()
+* [File Upload Attacks]()
+* [Command Injections]()
+* [Web Attacks]()
+* [Attacking Common Applications]()
+* [Linux Privilege Escalation]()
+* [Windows Privilege Escalation]()
+* [Documentation & Reporting]()
+* [Attacking Enterprise Networks]()
+* ...
 
 ## HTB Academy Skills Assessment - Lab Walkthroughs   
 
