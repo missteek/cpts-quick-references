@@ -330,8 +330,8 @@ EXAMPLE USAGE:
 # Skills Assessment - Web Fuzzing  
 
 >[HackTheBox Academy - Skills Assessment - Web Fuzzing with FFUF](https://academy.hackthebox.com/module/54/section/511)  
->{walkThrough](https://charleskvarga.com/post/htb-academy-attacking-web-applications-with-ffuf-walkthrough/)  
-
+>[walkThrough](https://charleskvarga.com/post/htb-academy-attacking-web-applications-with-ffuf-walkthrough/)  
+  
 >1. Run a sub-domain/vhost fuzzing scan on `*.academy.htb` for the IP shown above. What are all the sub-domains you can identify?
 ```
 ffuf -w quick-list.txt:FUZZ -u http://FUZZ.academy.htb:PORT/
