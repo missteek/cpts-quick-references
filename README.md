@@ -14,10 +14,22 @@
 * [Pivoting, Tunnelling, and Port Forwarding](/Pivoting%20Tunneling%20Port%20Forwarding.md)  
 * [Active Directory Enumeration & Attacks](/Active%20Directory%20Enumeration%20and%20Attacks.md)  
 * [Active Directory Tools](/Active%20Directory%20Tools.md)  
-* [Using Web Proxies](/Using%20Web%20Proxies.md)  
-* [Attacking Web Applications with Ffuf](/Attacking Web Applications with Ffuf.md)  
+* [Using Web Proxies](/Using%20WEB%20Proxies.md)  
+* [Attacking Web Applications with Ffuf](/FFUF-Web-Fuzzing.md)  
 * [Login Brute Forcing](/Login Brute Forcing.md)  
-* [SQL Injection Fundamentals](/SQL Injection Fundamentals.md)  
+* [SQL Injection Fundamentals](/SQL Injection Fundamentals.md)
+* [SQLMap Essentials]()
+* [Cross-Site Scripting (XSS)]()
+* [File Inclusion]()
+* [File Upload Attacks]()
+* [Command Injections]()
+* [Web Attacks]()
+* [Attacking Common Applications]()
+* [Linux Privilege Escalation]()
+* [Windows Privilege Escalation]()
+* [Documentation & Reporting]()
+* [Attacking Enterprise Networks]()
+* ...
 
 ## HTB Academy Skills Assessment - Lab Walkthroughs   
 

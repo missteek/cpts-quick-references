@@ -1,4 +1,4 @@
-# Ffuf
+# Ffuf Web Application Attacks  
 
 ## Quick Reference Commands  
 
