@@ -17,6 +17,8 @@
 
 ## Wordlists
 
+>Custom Wordlist - [Value Fuzzing](https://academy.hackthebox.com/module/54/section/505)  
+
 | **Command**   | **Description**   |
 | --------------|-------------------|
 | `/usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt` | Directory/Page Wordlist |
@@ -92,7 +94,7 @@ ffuf -c -ic -w subdomains-top1million-5000.txt -u http://FUZZ.hackthebox.eu/ -fc
 ffuf -c -w ./vhosts -u http://192.168.10.10 -H "HOST: FUZZ.randomtarget.com" -fs 612
 ```
 ```
-ffuf -c -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt -H "Host: FUZZ.vulnnet.thm" -u http://vulnnet.thm/ -fs 85
+ffuf -c -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt -H "Host: FUZZ.academy.thm" -u http://academy.htb:54542/ -fs 85
 ```
 ```
 ffuf -c -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt -H "Host: FUZZ.koikoi.oscp/" -u http://koikoi.oscp/
@@ -142,9 +144,27 @@ ffuf -u http://target IP/weather/forecast?city=\'FUZZ-- -c -w /opt/SecLists/Fuzz
 
 ### Parameter values
 
+>[Parameter Fuzzing - GET](https://academy.hackthebox.com/module/54/section/490)  
+>[Parameter Fuzzing - POST](https://academy.hackthebox.com/module/54/section/508)
+
+```
+ffuf -w /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u http://admin.academy.htb:54542/admin/admin.php?FUZZ=key -fs xxx
+```
 ```
 ffuf -c -w /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt:PARAM -c -w values.txt:VAL -u http://flasky.offsec/add?PARAM=VAL -mr "VAL" -c
 ```
+>POST
+```
+ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u http://admin.academy.htb:PORT/admin/admin.php -X POST -d 'FUZZ=key' -H 'Content-Type: application/x-www-form-urlencoded' -fs xxx
+```
+```
+ffuf -w ids.txt:FUZZ -u http://admin.academy.htb:54542/admin/admin.php -X POST -d 'id=FUZZ' -H 'Content-Type: application/x-www-form-urlencoded' -fs 768
+```
+>Discovered the key value as `73`, and POST using `CURL`.  
+```
+curl http://admin.academy.htb:54542/admin/admin.php -X POST -d 'id=73' -H 'Content-Type: application/x-www-form-urlencoded'
+```
+>HTB{p4r4m373r_fuzz1n6_15_k3y!}  
 
 ### API file POST request
 
@@ -187,7 +207,7 @@ ffuf -c -w valid_usernames.txt:W1,/usr/share/wordlists/SecLists/Passwords/Common
 ### Recursive
 
 ```
-ffuf -recursion -recursion-depth 1 -u http://192.168.10.10/FUZZ -c -w /usr/share/seclists/Discovery/Web-Content/raft-small-directories-lowercase.txt
+ffuf -recursion -recursion-depth 1 -u https://admin.academy.htb:54542/FUZZ -c -w /usr/share/seclists/Discovery/Web-Content/raft-small-directories-lowercase.txt
 ```
 ```
 ffuf -c -v -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt -u http://94.237.55.13:43548/FUZZ -e .php -recursion -recursion-depth 1
