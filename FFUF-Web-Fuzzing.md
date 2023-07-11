@@ -52,7 +52,7 @@
 ### Root website  
 
 ```
-ffuf -c -w /usr/share/seclists/Discovery/Web-Content/big.txt -u http://vulnnet.thm/FUZZ
+ffuf -c -w /usr/share/seclists/Discovery/Web-Content/big.txt -u http://vulnnet.htb/FUZZ
 ```
 ```
 ffuf -c -c -w /usr/share/seclists/Discovery/Web-Content/big.txt -u http://spectra.htb/FUZZ
@@ -64,10 +64,10 @@ ffuf -c -w ~/Downloads/wordlists/big.txt -u http://lordoftheroot.box:1337/FUZZ
 ### ROOT website extensions  
 
 ```
-ffuf -c -w typo3_custom.txt -u http://maintest.enterprize.thm/FUZZ -e .old -fc 301 | grep "\.old"
+ffuf -c -w typo3_custom.txt -u http://maintest.enterprize.htb/FUZZ -e .old -fc 301 | grep "\.old"
 ```
 ```
-ffuf -c -w /usr/share/seclists/Discovery/Web-Content/common.txt -u http://vulnnet.thm/FUZZ -e .txt,.json,.php,.html,.bak,.old,.sql,.zip,.zz -fc 403
+ffuf -c -w /usr/share/seclists/Discovery/Web-Content/common.txt -u http://vulnnet.htb/FUZZ -e .txt,.json,.php,.html,.bak,.old,.sql,.zip,.zz -fc 403
 ```
 ```
 ffuf -c -c -w ~/Downloads/wordlists/big.txt -u http://lordoftheroot.box:1337/FUZZ -e .git,.txt,.json,.php,.html,.bak,.old,.sql,.zip,.conf,.cfg,.go
@@ -82,7 +82,7 @@ ffuf -c -c -w ~/Downloads/wordlists/big.txt -u http://lordoftheroot.box:1337/FUZ
 > -fc Wrong parameter value returning HTTP response code 400. filtering out response code 400 - Bad request
   
 ```
-ffuf -c -ic -w subdomains-top1million-5000.txt -u http://FUZZ.hackthebox.eu/ -fc 403
+ffuf -c -ic -w subdomains-top1million-5000.txt -u http://FUZZ.academy.htb:12345/ -fc 403
 ```
 
 ### vHosts domains  
@@ -94,7 +94,7 @@ ffuf -c -ic -w subdomains-top1million-5000.txt -u http://FUZZ.hackthebox.eu/ -fc
 ffuf -c -w ./vhosts -u http://192.168.10.10 -H "HOST: FUZZ.randomtarget.com" -fs 612
 ```
 ```
-ffuf -c -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt -H "Host: FUZZ.academy.thm" -u http://academy.htb:54542/ -fs 85
+ffuf -c -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt -H "Host: FUZZ.academy.htb" -u http://academy.htb:54542/ -fs 85
 ```
 ```
 ffuf -c -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt -H "Host: FUZZ.koikoi.oscp/" -u http://koikoi.oscp/
@@ -103,7 +103,7 @@ ffuf -c -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt -
 ffuf -u http://trick.htb -c -w 0-common-with-mylist.txt -H 'Host: preprod-FUZZ.trick.htb' -fw 1697
 ```  
 ```
-ffuf -c -w /usr/share/seclists/Discovery/Web-Content/big.txt -u http://broadcast.vulnnet.thm/FUZZ -fc 401
+ffuf -c -w /usr/share/seclists/Discovery/Web-Content/big.txt -u http://broadcast.vulnnet.htb/FUZZ -fc 401
 ```
 ```
 ffuf -u http://sneakycorp.htb -H 'Host: FUZZ.sneakycorp.htb' -c -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -fw 6
@@ -115,13 +115,24 @@ ffuf -u http://horizontall.htb -H 'Host: FUZZ.forge.htb' -c -w ~/Downloads/wordl
 ### Extensions  
 
 ```
-ffuf -c -w /usr/share/seclists/Discovery/Web-Content/common.txt -u http://broadcast.vulnnet.thm/FUZZ -e .txt,.json,.php,.html,.bak,.old,.sql,.zip,.zz -fc 403
+ffuf -c -w /usr/share/seclists/Discovery/Web-Content/common.txt -u http://broadcast.vulnnet.htb/FUZZ -e .txt,.json,.php,.html,.bak,.old,.sql,.zip,.zz -fc 403
+```
+
+>Accepted Extension discovery scans.  
+```
+ffuf -c -ic -w /usr/share/seclists/Discovery/Web-Content/web-extensions.txt:FUZZ -u http://academy.htb:57089/indexFUZZ
+```  
+
+>Multiple subdomain scan using a `for` loop to scan through possible file names with three possible extensions listed, `.php,.phps,.php7`.  
+
+```
+for sub in archive test faculty; do ffuf -w /usr/share/seclists/Discovery/Web-Content/raft-large-words-lowercase.txt:FUZZ -u http://$sub.academy.htb:57089/FUZZ -recursion -recursion-depth 1 -e .php,.phps,.php7 -v -t 200 -fs 287 -ic; done
 ```
 
 ### Known file + Extension
 
 ```
-ffuf -c -v -c -w ~/Downloads/htb/quick-extensions1.txt -u http://team.thm/scripts/script.FUZZ
+ffuf -c -v -c -w ~/Downloads/htb/quick-extensions1.txt -u http://team.htb/scripts/script.FUZZ
 ```
 
 ### FFUF via Proxy
@@ -315,3 +326,35 @@ EXAMPLE USAGE:
   Fuzz multiple locations. Match only responses reflecting the value of "VAL" keyword. Colored.
     ffuf -w params.txt:PARAM -w values.txt:VAL -u https://example.org/?PARAM=VAL -mr "VAL" -c
 ```  
+
+# Skills Assessment - Web Fuzzing  
+
+94.237.55.114:57089
+
+
+>Run a sub-domain/vhost fuzzing scan on `*.academy.htb` for the IP shown above. What are all the sub-domains you can identify?
+
+```
+ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u http://FUZZ.academy.htb:PORT/
+```  
+
+```
+ffuf -c -ic -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt:FUZZ -u http://academy.htb:52269/ -H 'Host: FUZZ.academy.htb' -fs 985
+
+
+https://academy.hackthebox.com/module/54/section/511 Question 5:
+ffuf -w /opt/useful/SecLists/Usernames/top-usernames-shortlist.txt:FUZZ -u http://faculty.academy.htb:39234/courses/linux-security.php7 -X POST -d 'username=FUZZ' -H 'Content-Type: application/x-www-form-urlencoded'
+ 
+ffuf -w /opt/useful/SecLists/Usernames/top-usernames-shortlist.txt:FUZZ -u http://faculty.academy.htb:39234/courses/linux-security.php7 -X POST -d 'user=FUZZ' -H 'Content-Type: application/x-www-form-urlencoded'
+
+ffuf -w /opt/useful/SecLists/Usernames/top-usernames-shortlist.txt:FUZZ -u http://faculty.academy.htb:39234/courses/linux-security.php7?username=FUZZ -fs 774
+ 
+ffuf -w /opt/useful/SecLists/Usernames/top-usernames-shortlist.txt:FUZZ -u http://faculty.academy.htb:39234/courses/linux-security.php7?user=FUZZ -fs 780
+```
+
+
+>94.237.55.114:57089
+
+```
+for sub in archive test faculty; do ffuf -w /usr/share/wordlists/SecLists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://:30862$sub.academy.htb/FUZZ -recursion -recursion-depth 1 -e .php,.phps,.php7 -v -t 200 -fs 287 -ic; done
+```
