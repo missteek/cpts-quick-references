@@ -41,13 +41,13 @@
 
 ### Samples  
 
-1. root of website `ffuf -c -w 9-big.txt -u http://easy.box/FUZZ`
-2. root website with extensions `ffuf -c -w 9-big.txt -u http://easy.box/FUZZ -e .git,.txt,.json,.php,.html,.bak,.old,.sql,.zip,.conf,.cfg,.asp,.aspx,.cs`
-3. sub web folders from root `ffuf -c -w 9-big.txt -u http://eezy.box/secret/FUZZ`
-4. sub web folder from root with extensions `ffuf -c -w 9-big.txt -u http://eezy.box/secret/FUZZ -e .git,.txt,.json,.php,.html,.bak,.old,.sql,.zip,.conf,.cfg,.js`
-5. subdomain fuzz of root domain `ffuf -c -w 9-big.txt -H "Host: FUZZ.easy.box/" -u http://easy.box/`
+1. Root directories `ffuf -c -w 9-big.txt -u http://easy.box/FUZZ`
+2. root with extensions `ffuf -c -w 9-big.txt -u http://easy.box/FUZZ -e .git,.txt,.json,.php,.html,.bak,.old,.sql,.zip,.conf,.cfg,.asp,.aspx,.cs`
+3. Sub web folders below folder `ffuf -c -w 9-big.txt -u http://eezy.box/secret/FUZZ`
+4. Sub web folder with extensions `ffuf -c -w 9-big.txt -u http://eezy.box/secret/FUZZ -e .git,.txt,.json,.php,.html,.bak,.old,.sql,.zip,.conf,.cfg,.js`
+5. vHost fuzz domain `ffuf -c -w 9-big.txt -H "Host: FUZZ.easy.box/" -u http://easy.box/`
 6. subdomain root  ^^ repeat step 1 but for found subdomain ^^ `ffuf -c -w 9-big.txt -u http://sub.easy.box/FUZZ`
-7. ffuf reporting `ffuf -c -w common.txt -u http://oscp.sec:8080/FUZZ -o ffuf_report.html -of html`
+7. Reporting `ffuf -c -w common.txt -u http://oscp.sec:8080/FUZZ -o ffuf_report.html -of html`
 
 ### Root website  
 
