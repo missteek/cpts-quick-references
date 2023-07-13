@@ -34,7 +34,7 @@ PORT   STATE SERVICE VERSION
 
 >Open the target on port 80 site `http://10.129.42.249/` in Firefox browsers.  
 
-![getting-started-web-enum](images/getting-started-web-enum.PNG)  
+![getting-started-web-enum](/images/getting-started-web-enum.PNG)  
 
 >Add the DNS host name to `/etc/hosts`.
 
@@ -105,11 +105,11 @@ use exploit/unix/webapp/get_simple_cms_upload_exec
 
 >Insert above into the theme editor code.
 
-![get-simple-theme-edit-rce](images/get-simple-theme-edit-rce.png)  
+![get-simple-theme-edit-rce](/images/get-simple-theme-edit-rce.png)  
 
 >Save the theme and go back to landing page to test webshell RCE.
 
-![get-simple-webshell-rce](images/get-simple-webshell-rce.png)  
+![get-simple-webshell-rce](/images/get-simple-webshell-rce.png)  
 
 >Webshell commands to enumerate target.  
 
