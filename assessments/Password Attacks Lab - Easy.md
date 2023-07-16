@@ -51,7 +51,7 @@ hashcat --force password.list -r custom.rule --stdout | sort -u > mut_password.l
 hydra -L resources/demo-users.lst -P resources/demo-pass.lst ftp://10.129.218.52
 ```  
 
-![Password Attacks Lab-Easy.png](/images/Password Attacks Lab-Easy.png)  
+![Password Attacks Lab-Easy](/images/Password-Attacks-Lab-Easy.png)  
 
 >Password brute force Results:  
 
@@ -93,4 +93,4 @@ ssh mike@10.129.218.52 -i id_rsa
 cat .bash_history
 ```  
 
-![Password Attacks Lab-Easy2](/images/Password Attacks Lab-Easy2.png)  
+![Password Attacks Lab-Easy2](/images/Password-Attacks-Lab-Easy2.png)  
