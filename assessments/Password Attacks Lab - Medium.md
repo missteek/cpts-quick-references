@@ -103,7 +103,7 @@ ss -tulpn
 
 ![netstat-Password-Attacks-Lab-Medium](/images/netstat-Password-Attacks-Lab-Medium.png)  
 
->Discovered MySQL on port 3306 internally.
+>Discovered MySQL on port 3306 internally. [Interacting with Common Services - SMB,SQL,RDP,DNS & SMTP](https://academy.hackthebox.com/module/116/section/1140)  
 >Using credentials for `jason` and password of `C4mNKjAtL2dydsYa6` to connect locally to SQL.  
 
 ```
@@ -118,7 +118,7 @@ select * from creds where name like 'dennis';
 
 ![SQL-Password-Attacks-Lab-Medium](/images/SQL-Password-Attacks-Lab-Medium.png)  
 
->Crednetials for `dennis` and password is `7AUgWWQEiMPdqx`.  
+>Credentials for the user `dennis` and the password discovered is `7AUgWWQEiMPdqx`.  
 
 ## Lateral Movement  
 
