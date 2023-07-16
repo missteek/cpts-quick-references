@@ -38,7 +38,7 @@
 * [Footprinting Lab - Easy](/assessments/Footprinting%20Lab%20-%20Easy.md)
 * [Footprinting Lab - Medium](/assessments/Footprinting%20Lab%20-%20Medium.md)
 * [Footprinting Lab - Hard](/assessments/Footprinting%20Lab%20-%20Hard.md)
-* [Attacking Common Services - Hard](/assessments/Attacking%20Common%20Services%20-%20Medium.md)  
+* [Attacking Common Services - Medium](/assessments/Attacking%20Common%20Services%20-%20Medium.md)  
 * [Attacking Common Services - Hard](/assessments/Attacking%20Common%20Services%20-%20Hard.md)  
 * [AD Enumeration & Attacks - Skills Assessment Part I](/assessments/AD%20Enumeration%20&%20Attacks%20-%20Skills%20Assessment%20Part%20I.md)
 * [AD Enumeration & Attacks - Skills Assessment Part II](/assessments/AD%20Enumeration%20%26%20Attacks%20-%20Skills%20Assessment%20Part%20II.md)  
