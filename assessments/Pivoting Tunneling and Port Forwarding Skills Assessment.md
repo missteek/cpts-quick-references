@@ -20,6 +20,10 @@
 
 >Connecting Info `10.129.201.127` for the webshell on ` support.inlanefreight.local`.  
 
+![Pivot skills assessment webshell](/images/pivot-skills-assessment-webshell.png)  
+
+
+
 
 
 
