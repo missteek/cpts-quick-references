@@ -23,11 +23,11 @@
 
 # Wordlists
 
-| **Command**   | **Description**   |
+| **Lists**   | **Description**   |
 | --------------|-------------------|
-| `/opt/useful/SecLists/Passwords/Default-Credentials/ftp-betterdefaultpasslist.txt` | Default Passwords Wordlist |
-| `/opt/useful/SecLists/Passwords/Leaked-Databases/rockyou.txt` | Common Passwords Wordlist |
-| `/opt/useful/SecLists/Usernames/Names/names.txt` | Common Names Wordlist |
+| `/usr/share/seclists/Passwords/Default-Credentials/ftp-betterdefaultpasslist.txt` | Default Passwords Wordlist [Dictionary Attack - SecLists repo for wordlists](https://github.com/danielmiessler/SecLists) |
+| `/usr/share/wordlists/rockyou.txt` | The most Common Passwords Wordlist |
+| `/usr/share/seclists/Usernames/Names/names.txt` | Common Names Wordlist |
 
 # Misc
 
