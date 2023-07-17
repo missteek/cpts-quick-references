@@ -17,7 +17,7 @@
 * [Using Web Proxies](/module/Using%20WEB%20Proxies.md)  
 * [Attacking Web Applications with Ffuf](/module/FFUF-Web-Fuzzing.md)  
 * [Login Brute Forcing](/module/Login%20Brute%20Forcing.md)  
-* [SQL Injection Fundamentals](/module/SQL Injection Fundamentals.md)
+* [SQL Injection Fundamentals](/module/SQL%20Injection%20Fundamentals.md)
 * [SQLMap Essentials](/module)
 * [Cross-Site Scripting (XSS)](/module)
 * [File Inclusion](/module)
@@ -50,5 +50,6 @@
 * [Skills Assessment - Web Fuzzing](/module/FFUF-Web-Fuzzing.md#skills-assessment---web-fuzzing)
 * [Login Brute Force - Skills Assessment Website](/assessments/Skills%20Assessment%20Website.md)
 * [Login Brute Force - Skills Assessment Service Login](/assessments/Skills%20Assessment%20Service%20Login.md)
+* [SQL Injection Fundamentals - Skills Assessment](/assessments/Skills%20Assessment%20-%20SQL%20Injection%20Fundamentals.md)
 * Learning In progress ...  ...  loading ...  ...  
 
