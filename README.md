@@ -44,7 +44,7 @@
 * [Attacking Common Services - Easy](/assessments/Attacking%20Common%20Services%20-%20Easy.md)
 * [Attacking Common Services - Medium](/assessments/Attacking%20Common%20Services%20-%20Medium.md)
 * [Attacking Common Services - Hard](/assessments/Attacking%20Common%20Services%20-%20Hard.md)
-* [Pivoting Tunneling and Port Forwarding Skills Assessment]()
+* [Pivoting Tunneling and Port Forwarding Skills Assessment](/assessments/Pivoting%20Tunneling%20and%20Port%20Forwarding%20Skills%20Assessment.md)
 * [AD Enumeration & Attacks - Skills Assessment Part I](/assessments/AD%20Enumeration%20&%20Attacks%20-%20Skills%20Assessment%20Part%20I.md)
 * [AD Enumeration & Attacks - Skills Assessment Part II](/assessments/AD%20Enumeration%20%26%20Attacks%20-%20Skills%20Assessment%20Part%20II.md)
 * [Skills Assessment - Web Fuzzing](/module/FFUF-Web-Fuzzing.md#skills-assessment---web-fuzzing)
