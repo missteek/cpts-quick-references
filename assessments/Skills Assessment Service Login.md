@@ -78,9 +78,10 @@ ls -al /home
 hydra -l g.potter -P /home/harry.potter/rockyou-30.txt ftp://127.0.0.1
 ```
 
->Switch user in SSH session to `g.potter` and the brute forced password discoverd: ``.  
+>Switch user in SSH session to `g.potter` and the brute forced password discoverd: `harry`.  
 
 ```
 su g.pottter
- 
 ```  
+
+![harry-potter.png](/images/harry-potter.png)  
