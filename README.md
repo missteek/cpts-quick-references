@@ -49,5 +49,6 @@
 * [AD Enumeration & Attacks - Skills Assessment Part II](/assessments/AD%20Enumeration%20%26%20Attacks%20-%20Skills%20Assessment%20Part%20II.md)
 * [Skills Assessment - Web Fuzzing](/module/FFUF-Web-Fuzzing.md#skills-assessment---web-fuzzing)
 * [Login Brute Force - Skills Assessment Website](/assessments/Skills%20Assessment%20Website.md)
+* [Skills Assessment Service Login](/assessments/Skills%20Assessment%20Service%20Login.md)
 * Learning In progress ...  ...  loading ...  ...  
 
