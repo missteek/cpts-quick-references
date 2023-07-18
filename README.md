@@ -18,7 +18,7 @@
 * [Attacking Web Applications with Ffuf](/module/FFUF-Web-Fuzzing.md)  
 * [Login Brute Forcing](/module/Login%20Brute%20Forcing.md)  
 * [SQL Injection Fundamentals](/module/SQL%20Injection%20Fundamentals.md)
-* [SQLMap Essentials](/module)
+* [SQLMap Essentials](/module/sqlmap%20Essentials.md)
 * [Cross-Site Scripting (XSS)](/module)
 * [File Inclusion](/module)
 * [File Upload Attacks](/module)
