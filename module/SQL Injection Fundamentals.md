@@ -92,6 +92,9 @@ FROM
    
 >In this query, we added `NULL` place holders for the columns that are not present in one of the tables. This should now execute without any errors, and it will give you the total number of records returned after performing the UNION of the two tables.  
 
+
+| **Payload**   | **Description**   |
+| --------------|-------------------|
 | **Union Injection** |
 | `' order by 1-- -` | Detect number of columns using `order by` |
 | `cn' UNION select 1,2,3-- -` | Detect number of columns using Union injection [Union Clause - Columns](https://academy.hackthebox.com/module/33/section/806) |
