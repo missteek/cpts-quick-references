@@ -181,3 +181,8 @@ Victim IP: 10.129.34.48 | Cookie: cookie=c00k1355h0u1d8353cu23d
 >Then use saved cookie value into browser session at `http://victim.htb/login.php` to gain access.  
 
 >[Remediation and prevention secure coding practices](https://academy.hackthebox.com/module/103/section/1009)  
+
+# XSS Skills Assessment  
+
+![xss assessment await-moderation](/images/xss-assessmennt-await-moderation.png)  
+
