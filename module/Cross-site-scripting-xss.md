@@ -25,7 +25,7 @@
 | **Commands** |
 | `python xsstrike.py -u "http://SERVER_IP:PORT/index.php?task=test"` | Run `xsstrike` on a url parameter |
 | `sudo nc -lvnp 80` | Start `netcat` listener |
-| `sudo php -S 0.0.0.0:80 ` | Start `PHP` server |
+| `sudo php -S 0.0.0.0:80 ` | Start `PHP` server, to allow the victim to load remote script from attacker. |
 
 
 ## Identify XSS  
