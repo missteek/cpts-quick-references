@@ -19,7 +19,7 @@
 * [Login Brute Forcing](/module/Login%20Brute%20Forcing.md)  
 * [SQL Injection Fundamentals](/module/SQL%20Injection%20Fundamentals.md)
 * [SQLMap Essentials](/module/sqlmap%20Essentials.md)
-* [Cross-Site Scripting (XSS)](/module)
+* [Cross-Site Scripting (XSS)](/module/Cross-site-scripting-xss.md)
 * [File Inclusion](/module)
 * [File Upload Attacks](/module)
 * [Command Injections](/module)
