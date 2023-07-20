@@ -52,5 +52,6 @@
 * [Login Brute Force - Skills Assessment Service Login](/assessments/Skills%20Assessment%20Service%20Login.md)
 * [SQL Injection Fundamentals - Skills Assessment](/assessments/Skills%20Assessment%20-%20SQL%20Injection%20Fundamentals.md)
 * [SQLMAP Essentials - Skills Assessment](/module/sqlmap%20Essentials.md#skills-assessment)
+* [XSS - Skills Assessment](/module/Cross-site-scripting-xss.md#xss-skills-assessment)
 * Learning In progress ...  ...  loading ...  ...  
 
