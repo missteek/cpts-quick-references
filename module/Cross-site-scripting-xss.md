@@ -186,3 +186,4 @@ Victim IP: 10.129.34.48 | Cookie: cookie=c00k1355h0u1d8353cu23d
 
 ![xss assessment await-moderation](/images/xss-assessmennt-await-moderation.png)  
 
+>[PayloadALlTheThings XSS Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20Injection#exploit-code-or-poc)  
