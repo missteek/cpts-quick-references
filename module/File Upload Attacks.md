@@ -131,7 +131,7 @@ GIF8
 
 >Above will render on the index landing page and retrieve the contents of `/flag.txt`.  
 
->Source code of PHP files can be trieved using Base64 to prevent execution on server, using below XML payload file upload:  
+>Source code of PHP files can be retrieve using Base64 to prevent execution on server, using below XML payload file upload:  
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -147,6 +147,95 @@ GIF8
 
 >You are contracted to perform a penetration test for a company's e-commerce web application. The web application is in its early stages, so you will only be testing any file upload forms you can find.
 >Try to utilize what you learned in this module to understand how the upload form works and how to bypass various validations in place (if any) to gain remote code execution on the back-end server.  
+
+## Identify File Upload  
+
+>The web application contact form contain screenshot file upload function.  
+
+![upload-skills-assess-page](/images/upload-skills-assess-page.png)  
+
+>Intercept with Burp Suite and start fuzzing...  
+
+### Client Side  
+
+>Remove client side html checks `checkfile(this)` to JavaScript source code call.
+
+```html
+<input name="uploadFile" id="uploadFile" type="file" class="custom-file-input" id="inputGroupFile02" onchange="checkFile(this)" accept=".jpg,.jpeg,.png">
+<label id="inputGroupFile01" class="custom-file-label" for="inputGroupFile02" aria-describeby="inputGroupFileAddon02">
+```  
+
+![upload-skills assess Client Side](/images/upload-skills-assess-clientside.png)  
+
+>Enumerate if possible to upload SVG extension with XML content.  
+
+![upload-skills-assess-xml-svg](/images/upload-skills-assess-xml-svg.png)  
+
+>Successfully read file `/etc/hostname` as POC.
+
+>Get the source code for all the files to find web directories, blacklist and whitelist filters etc.  
+
+```php
+<?php
+require_once('./common-functions.php');
+
+// uploaded files directory
+$target_dir = "./user_feedback_submissions/";
+
+// rename before storing
+$fileName = date('ymd') . '_' . basename($_FILES["uploadFile"]["name"]);
+$target_file = $target_dir . $fileName;
+
+// get content headers
+$contentType = $_FILES['uploadFile']['type'];
+$MIMEtype = mime_content_type($_FILES['uploadFile']['tmp_name']);
+
+// blacklist test
+if (preg_match('/.+\.ph(p|ps|tml)/', $fileName)) {
+    echo "Extension not allowed";
+    die();
+}
+
+// whitelist test
+if (!preg_match('/^.+\.[a-z]{2,3}g$/', $fileName)) {
+    echo "Only images are allowed";
+    die();
+}
+
+// type test
+foreach (array($contentType, $MIMEtype) as $type) {
+    if (!preg_match('/image\/[a-z]{2,3}g/', $type)) {
+        echo "Only images are allowed";
+        die();
+    }
+}
+
+// size test
+if ($_FILES["uploadFile"]["size"] > 500000) {
+    echo "File too large";
+    die();
+}
+
+if (move_uploaded_file($_FILES["uploadFile"]["tmp_name"], $target_file)) {
+    displayHTMLImage($target_file);
+} else {
+    echo "File failed to upload";
+}
+```  
+
+
+
+
+![upload-skills-assess-extension](/images/upload-skills-assess-extension.png)  
+
+>Burp Suite Intruder identify possible valid extension as `.phar`.  
+
+
+
+GET /contact/submit.php?Name=test1&Email=test2%40test.com&Message=test3&uploadFile=file_uploads_normal_request.jpg
+```  
+
+
 
 
  

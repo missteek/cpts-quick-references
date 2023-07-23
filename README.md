@@ -54,5 +54,6 @@
 * [SQLMAP Essentials - Skills Assessment](/module/sqlmap%20Essentials.md#skills-assessment)
 * [XSS - Skills Assessment](/module/Cross-site-scripting-xss.md#xss-skills-assessment)
 * [File Inclusion - Skills Assessment](/module/File%20Inclusions.md#skills-assessment---file-inclusion)
+* [File Upload Attacks - Skills Assessment](/module/File%20Upload%20Attacks.md#skills-assessment---file-upload-attacks)
 * Learning In progress ...  ...  loading ...  ...  
 
