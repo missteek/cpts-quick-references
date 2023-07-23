@@ -22,7 +22,7 @@
 * [Cross-Site Scripting (XSS)](/module/Cross-site-scripting-xss.md)
 * [File Inclusion - LFI](/module/File%20Inclusions.md)
 * [File Upload Attacks](/module/File%20Upload%20Attacks.md)
-* [Command Injections](/module)
+* [Command Injections](/module/command%20injection.md)
 * [Web Attacks](/module)
 * [Attacking Common Applications](/module)
 * [Linux Privilege Escalation](/module)
