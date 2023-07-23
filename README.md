@@ -1,5 +1,7 @@
 # CPTS Quick References  
 
+![HackTheBox Academy CPTS Study Path](/images/cpts-logo.png)  
+
 ## HackTheBox CPTS Modules - Commands Quick references  
 
 * [Getting Started](/module/Getting%20Started.md)  
