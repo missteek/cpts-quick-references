@@ -34,6 +34,13 @@
 | `shell.jpg.php` | Double Extension bypass example|
 | `shell.php.jpg` | Reverse Double Extension |
 
+### Extra Client Side  
+
+>Client side html code alter to allow file upload validation bypass by removing `validate()`, optional clearing the `onchange` and `accept` values.  
+
+![uploads-client-side-html](/images/uploads-client-side-html.png)  
+
+### Extra Wordlist Script  
 
 >Character Injection - Before/After Extension to generate list of possible filenames to bypass file upload filters on white or black listings.  
 
@@ -52,13 +59,11 @@ done
 
 | **Command**   | **Description**   |
 | --------------|-------------------|
-| [Web Content-Types](https://github.com/danielmiessler/SecLists/blob/master/Miscellaneous/web/content-type.txt) | List of Web Content-Types |
+| [Web Content-Types](https://github.com/danielmiessler/SecLists/blob/master/Miscellaneous/web/content-type.txt) | List of [Web Content-Types](https://academy.hackthebox.com/module/136/section/1290) |
 | [Content-Types](https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/web-all-content-types.txt) | List of All Content-Types |
 | [File Signatures](https://en.wikipedia.org/wiki/List_of_file_signatures) | List of File Signatures/Magic Bytes |
 
->Client side html code alter to allow file upload validation bypass by removing `validate()`, optional clearing the `onchange` and `accept` values.  
-
-![uploads-client-side-html](/images/uploads-client-side-html.png)  
+>Example of the Payload code for the file being uploaded, `<?php echo file_get_contents('/flag.txt'); ?>`, add `GIF8` at top of file body and keep the file name as `shell.php`. The `Content-Type:` is then the injection payload position for Burp Suite Intruder using the above wordlists.  
 
 
 ## Limited Uploads
@@ -68,3 +73,17 @@ done
 | `XSS` | HTML, JS, SVG, GIF |
 | `XXE`/`SSRF` | XML, SVG, PDF, PPT, DOC |
 | `DoS` | ZIP, JPG, PNG |
+
+# Upload Exercise  
+
+>The server employs Client-Side, Blacklist, Whitelist, Content-Type, and MIME-Type filters to ensure the uploaded file is an image. Try to combine all of the attacks you learned so far to bypass these filters and upload a PHP file and read the flag at "/flag.txt"
+
+Client-Side
+
+type-filters-exercise-step1.png
+
+
+Blacklist
+
+Whitelist
+
