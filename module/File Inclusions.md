@@ -175,7 +175,7 @@ cat index.php | grep -ie 'Admin'
 ![LFI-skills-assess-identified](/images/LFI-skills-assess-identified.png)  
 
 >By Assessing the admin page discovered in the PHP source code comment, and using the `log` parameter to read files. 
->Log Poisoning technique to gain remote code execution and find a flag in the / root directory of the file system.  
+>[LFI + Log Poisoning technique = RCE](https://academy.hackthebox.com/module/23/section/252) to gain remote code execution and find a flag in the / root directory of the file system.  
 
 ### Log Poison  
 
