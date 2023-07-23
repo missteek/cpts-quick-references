@@ -53,5 +53,6 @@
 * [SQL Injection Fundamentals - Skills Assessment](/assessments/Skills%20Assessment%20-%20SQL%20Injection%20Fundamentals.md)
 * [SQLMAP Essentials - Skills Assessment](/module/sqlmap%20Essentials.md#skills-assessment)
 * [XSS - Skills Assessment](/module/Cross-site-scripting-xss.md#xss-skills-assessment)
+* [File Inclusion - Skills Assessment](/module/File%20Inclusions.md#skills-assessment---file-inclusion)
 * Learning In progress ...  ...  loading ...  ...  
 
