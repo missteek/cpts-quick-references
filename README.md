@@ -20,7 +20,7 @@
 * [SQL Injection Fundamentals](/module/SQL%20Injection%20Fundamentals.md)
 * [SQLMap Essentials](/module/sqlmap%20Essentials.md)
 * [Cross-Site Scripting (XSS)](/module/Cross-site-scripting-xss.md)
-* [File Inclusion](/module/File%20Inclusions.md)
+* [File Inclusion - LFI](/module/File%20Inclusions.md)
 * [File Upload Attacks](/module)
 * [Command Injections](/module)
 * [Web Attacks](/module)
