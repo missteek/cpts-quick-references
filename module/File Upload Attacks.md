@@ -275,5 +275,3 @@ AAAA
 >Once the image webshell file upload browse to it at, `http://1.2.3.4/contact/user_feedback_submissions/230723_shell.phar.jpeg?cmd=cat+/flag.txt` to obtain the flag.  
 
 ![upload-skills-assess-flag](/images/upload-skills-assess-flag.png)  
-
-
