@@ -43,11 +43,11 @@ app.get("/createfile", function(req, res){
 %0a
 &
 %26
-\|
+|
 %7c
 &&
 %26%26
-\|\|
+||
 %7c%7c
 ``
 %60%60
