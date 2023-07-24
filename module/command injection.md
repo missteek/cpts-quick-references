@@ -247,11 +247,11 @@ ip=127.0.0.1%0a$(rev<<<'hsab')<<<$($(rev<<<'46esab')${IFS}-d<<<ZmluZCAvdXNyL3NoY
 ![command inject skill assess move function cluster bomb](/images/cmd-inject-skill-assess-move-function-cluster-bomb.png)  
 
 >Setting 2 payload positions on the web parameter, first position is the separator to use and the second position is the possible Linux bash commands obfuscated.  
-
+  
 >BURP INTRUDER ATTACK PAYLOAD OPTIONS NOTE:  
 
-+ Payload 1 (list of separator characters) - Do not URL-encode characters  
-+ Payload 2 (list of obfuscated sample Linux bash commands) Do enable URL-encode the characters of the list commands  
++ Payload 1 (list of [Separator Characters](/module/command%20injection.md#separator-characters)) - Do NOT URL-encode characters.  
++ Payload 2 (list of [Obfuscated Commands](/module/command%20injection.md#obfuscated-commands) for Linux) Do enable URL-encode for the characters on this payload list.  
 
 >After running the first time intruder cluster bomb attack I see results of attack for payload 1 of `%26` give response message with the Linux command in response indicating partial success.
 >Next attack I then appending `%26` in-front of position 1 and rerun the attack with the two payloads positions again, then the attack results indicated Sub-Shell `$()` allow execution of command.  
