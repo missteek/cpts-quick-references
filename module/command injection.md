@@ -202,6 +202,7 @@ ip=127.0.0.1%0a$(rev<<<'hsab')<<<$($(rev<<<'46esab')${IFS}-d<<<ZmluZCAvdXNyL3NoY
 
 # Skills Assessment - Command Injection  
 
+>Presented with login page to web application, `Tiny File Manager 2.4.6`.  
 >After logging in as the user `guest` with a password of `guest` the landing page list files in folder and there is functions on each listed files in web folder.  
 
 ![cmd-inject-skill-assess-landing-page](/images/cmd-inject-skill-assess-landing-page.png)  
@@ -210,6 +211,13 @@ ip=127.0.0.1%0a$(rev<<<'hsab')<<<$($(rev<<<'46esab')${IFS}-d<<<ZmluZCAvdXNyL3NoY
 
 ![cmd-inject-skill-assess](/images/cmd-inject-skill-assess.png)  
 
->Enumeration to find command injection web parameter...  
+>Enumeration to find command injection web parameters: Copy, move, download...  
+
+![cmd-inject-skill-assess-move-function](/images/cmd-inject-skill-assess-move-function.png)  
+
+>When testing the move function the error message in response show: `Error while moving: mv: cannot stat`.  
+
+2561732172
+
 
 
