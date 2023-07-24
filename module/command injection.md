@@ -36,6 +36,8 @@ app.get("/createfile", function(req, res){
 |Sub-Shell| ` `` `|`%60%60`|Both (Linux-only)|
 |Sub-Shell| `$()`|`%24%28%29`|Both Linux-only - [Command Injection Methods](https://academy.hackthebox.com/module/109/section/1032) |
 
+### Separator Characters  
+
 >List of injection characters and matching URL encoded as wordlist of possible separators:  
 
 ```
@@ -56,6 +58,8 @@ app.get("/createfile", function(req, res){
 $()
 %24%28%29
 ```  
+
+### Obfuscated Commands  
 
 >List of commands obfuscated as wordlist to test possible WAF filter bypass:  
 
