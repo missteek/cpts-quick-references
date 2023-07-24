@@ -221,42 +221,52 @@ ip=127.0.0.1%0a$(rev<<<'hsab')<<<$($(rev<<<'46esab')${IFS}-d<<<ZmluZCAvdXNyL3NoY
 
 ![cmd-inject-skill-assess-landing-page](/images/cmd-inject-skill-assess-landing-page.png)  
 
->Copying function on the select file available actions.
+>Testing and researching vulnerabilities based on the version of the web application, I moved on to enumerating web parameters.  
+
+>The `Copying` page present functions on the select file to perform actions on the back-end.  
 
 ![cmd-inject-skill-assess](/images/cmd-inject-skill-assess.png)  
 
->Enumeration to find command injection web parameters: Copy, move, download...  
+>Enumeration to find command injection web parameters on the features: Copy, move, download...  
 
 ![cmd-inject-skill-assess-move-function](/images/cmd-inject-skill-assess-move-function.png)  
 
->When testing the move function the error message in response show: `Malicious request denied`.  
+>When testing the move function the error message in response show: `Malicious request denied`. 
+>This indicating possible WAF or filters to prevent command injection separator characters detected by back-end.  
 
 ![cmd-inject-skill-assess-move-function-malicious](/images/cmd-inject-skill-assess-move-function-malicious.png)  
 
->To determine what the WAF filters are blocking we will run Burp Intruder with cluster bomb attack to iterate though all payload combinations.
+>To determine what the WAF filters are blocking or white listing, I will run Burp Intruder with cluster bomb attack to iterate though all payload list combinations.  
 
 ![command inject skill assess move function cluster bomb](/images/cmd-inject-skill-assess-move-function-cluster-bomb.png)  
+
+>Setting to payload positions on the web parameter, first position is the separator to use and the second position is the possible Linux bash commands obfuscations.  
 
 >BURP INTRUDER ATTACK PAYLOAD OPTIONS NOTE:  
 
 + Payload 1 (list of separator characters) - Do not URL-encode characters  
 + Payload 2 (list of obfuscated sample Linux bash commands) Do enable URL-encode the characters of the list commands  
 
->After running the first time intruder cluster bomb attack we see results of attack for payload 1 of `%26` and then appending it in-front and rerun attack with two payloads positions again ,result in `u'n'a'm'e` execution and no `GREP` column for message `Malicious request denied`.
+>After running the first time intruder cluster bomb attack I see results of attack for payload 1 of `%26` give response message with the Linux command in response indicating partial success.
+>Next attack I then appending `%26` in-front of position 1 and rerun the attack with the two payloads positions again.
+Attack result show the command obfuscated as `u'n'a'm'e` executed and the no `GREP` column set in the intruder attack options did not get the message `Malicious request denied`.  
 
 ![cmd-inject-skill-assess-move-function-cluster-bomb-result1](/images/cmd-inject-skill-assess-move-function-cluster-bomb-result1.png)  
 
->Successfully Identified command injection in the `?to=` parameter. Send the request to Burp Suite Repeater where we see below the `uname` command executed...  
+>Successfully Identified command injection in the `?to=` parameter.  
+>Sending the request to Burp Suite Repeater where I see below the `uname` command executed, giving the response of `Linux`.  
 
 ![cmd-inject-skill-assess-success-intruder-attack-response](/images/cmd-inject-skill-assess-success-intruder-attack-response.png)  
 
->Payload to list the root folder and hidden files content, `&$()ls / -al`, obfuscated payload below:  
+>Modifying the request in repeat with a Payload to list the root `/` folder and list all hidden files with the command, `&$()ls / -al`.
+>The obfuscated payload below:  
 
 ```
 GET /index.php?to=tmp%26$()l's'${IFS}${PATH:0:1}${IFS}-a'l'&from=2561732172.txt&finish=1&move=1 HTTP/1.1
 ```  
 
->Reading the flag contents, `&$()cat /flag.txt`.  Below is the obfuscated command injection payload to bypass blacklisted commands and characters through WAF.
+>Bash command to read the flag contents, `&$()cat /flag.txt`.  
+>Below is the obfuscated command injection payload to bypass blacklisted commands and characters through WAF filters.  
 
 ```
 GET /index.php?to=tmp%26$()c'a't${IFS}${PATH:0:1}flag.txt&from=2561732172.txt&finish=1&move=1 HTTP/1.1
