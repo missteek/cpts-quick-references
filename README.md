@@ -1,8 +1,8 @@
-# CPTS Quick References  
+# CPTS Study Reference  
 
 ![HackTheBox Academy CPTS Study Path](/images/cpts-logo.png)  
 
-## HackTheBox CPTS Modules - Commands Quick references  
+## HackTheBox Certified Penetration Tester Modules  
 
 * [Getting Started](/module/Getting%20Started.md)  
 * [Network Enumeration NMAP]("/module/Network%20Enumeration%20NMAP.md")  
