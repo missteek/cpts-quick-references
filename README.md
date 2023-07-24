@@ -25,7 +25,7 @@
 * [File Inclusion - LFI](/module/File%20Inclusions.md)
 * [File Upload Attacks](/module/File%20Upload%20Attacks.md)
 * [Command Injections](/module/command%20injection.md)
-* [Web Attacks](/module)
+* [Web Attacks](/module/Web-Attacks.md)
 * [Attacking Common Applications](/module)
 * [Linux Privilege Escalation](/module)
 * [Windows Privilege Escalation](/module)
