@@ -202,13 +202,14 @@ ip=127.0.0.1%0a$(rev<<<'hsab')<<<$($(rev<<<'46esab')${IFS}-d<<<ZmluZCAvdXNyL3NoY
 
 # Skills Assessment - Command Injection  
 
->HTB{1nj3c73d_my_f1r57_c0mm4nd}
+>After logging in as the user `guest` with a password of `guest` the landing page list files in folder and there is functions on each listed files in web folder.  
 
-1nj3c70r
+![cmd-inject-skill-assess-landing-page](/images/cmd-inject-skill-assess-landing-page.png)  
 
-cmd-inject-skill-assess.png
+>Copying function on the select file available actions.
 
+![cmd-inject-skill-assess](/images/cmd-inject-skill-assess.png)  
 
-cmd-inject-skill-assess-landing-page.png
+>Enumeration to find command injection web parameter...  
 
 
