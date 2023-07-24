@@ -34,7 +34,7 @@ app.get("/createfile", function(req, res){
 |AND| `&&`|`%26%26`|Both (only if first succeeds)|
 |OR| `\|\|`|`%7c%7c`|Second, only if first fails [Other Injection Operators](https://academy.hackthebox.com/module/109/section/1034) |
 |Sub-Shell| ` `` `|`%60%60`|Both (Linux-only)|
-|Sub-Shell| `$()`|`%24%28%29`|Both (Linux-only)|
+|Sub-Shell| `$()`|`%24%28%29`|Both Linux-only - [Command Injection Methods](https://academy.hackthebox.com/module/109/section/1032) |
 
 >List of injection characters and matching URL encoded as wordlist of possible separators:  
 
@@ -229,7 +229,7 @@ ip=127.0.0.1%0a$(rev<<<'hsab')<<<$($(rev<<<'46esab')${IFS}-d<<<ZmluZCAvdXNyL3NoY
 
 ![cmd-inject-skill-assess](/images/cmd-inject-skill-assess.png)  
 
->Enumeration to find command injection web parameters on the features: Copy, move, download...  
+>Enumeration to find command injection web parameters on the features: Copy or Move.  
 
 ![cmd-inject-skill-assess-move-function](/images/cmd-inject-skill-assess-move-function.png)  
 
@@ -242,7 +242,7 @@ ip=127.0.0.1%0a$(rev<<<'hsab')<<<$($(rev<<<'46esab')${IFS}-d<<<ZmluZCAvdXNyL3NoY
 
 ![command inject skill assess move function cluster bomb](/images/cmd-inject-skill-assess-move-function-cluster-bomb.png)  
 
->Setting to payload positions on the web parameter, first position is the separator to use and the second position is the possible Linux bash commands obfuscations.  
+>Setting 2 payload positions on the web parameter, first position is the separator to use and the second position is the possible Linux bash commands obfuscated.  
 
 >BURP INTRUDER ATTACK PAYLOAD OPTIONS NOTE:  
 
@@ -250,7 +250,7 @@ ip=127.0.0.1%0a$(rev<<<'hsab')<<<$($(rev<<<'46esab')${IFS}-d<<<ZmluZCAvdXNyL3NoY
 + Payload 2 (list of obfuscated sample Linux bash commands) Do enable URL-encode the characters of the list commands  
 
 >After running the first time intruder cluster bomb attack I see results of attack for payload 1 of `%26` give response message with the Linux command in response indicating partial success.
->Next attack I then appending `%26` in-front of position 1 and rerun the attack with the two payloads positions again.
+>Next attack I then appending `%26` in-front of position 1 and rerun the attack with the two payloads positions again, then the attack results indicated Sub-Shell `$()` allow execution of command.  
 Attack result show the command obfuscated as `u'n'a'm'e` executed and the no `GREP` column set in the intruder attack options did not get the message `Malicious request denied`.  
 
 ![cmd-inject-skill-assess-move-function-cluster-bomb-result1](/images/cmd-inject-skill-assess-move-function-cluster-bomb-result1.png)  
