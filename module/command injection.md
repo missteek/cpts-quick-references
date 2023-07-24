@@ -246,7 +246,9 @@ ip=127.0.0.1%0a$(rev<<<'hsab')<<<$($(rev<<<'46esab')${IFS}-d<<<ZmluZCAvdXNyL3NoY
 
 ![cmd-inject-skill-assess-move-function-cluster-bomb-result1](/images/cmd-inject-skill-assess-move-function-cluster-bomb-result1.png)  
 
->Successfully Identified command injection in the `?to=` parameter,Run intruder again...
+>Successfully Identified command injection in the `?to=` parameter. Send the request to Burp Suite Repeater where we see below the `uname` command executed...  
+
+![cmd-inject-skill-assess-success-intruder-attack-response](/images/cmd-inject-skill-assess-success-intruder-attack-response.png)  
 
 >Payload to list the root folder and hidden files content, `&$()ls / -al`, obfuscated payload below:  
 
