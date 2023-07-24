@@ -3,6 +3,8 @@
 >[BSCP Study Notes on OS Command Injection](https://github.com/botesjuan/Burp-Suite-Certified-Practitioner-Exam-Study#os-command-injection)  
 >[HackTheBox Command Injection](https://academy.hackthebox.com/module/109/section/1031)  
 
+![inject with caution](/images/inject%20with%20caution.png)  
+
 >PHP Example of executing command directly on the back-end server:
 
 ```php
